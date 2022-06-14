@@ -1,13 +1,24 @@
 import { useState, useEffect } from 'react';
-import { newDeckShuffledLink, decksCount } from '../const/api';
 
-const useFetch = (url = newDeckShuffledLink + decksCount, options = null) => {
+const useFetch = (url, options = null) => {
+  const [load, setLoad] = useState(false)
+
   const [data, setData] = useState(null);
-  useEffect(() => {
-    fetch(url, options)
-      .then(res => res.json())
-      .then(data => setData(data));
-  }, [url, options]);
-  return {data}
+  const [error, setError] = useState(null);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {(    
+        async function () {
+            await fetch(url, options)
+            .then(res => res.json())
+            .then(data => {
+                setData(data)
+                setLoaded(true);    
+            })
+            .catch( error => setError(error) )
+        }
+    )() }, []);
+
+  return {data, error, loaded}
 }
 export default useFetch;

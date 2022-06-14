@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import {colors} from "../const/colors";
+import {colors} from "../../const/colors";
 
 export const MenuButton = styled(Link)`
     display: block;

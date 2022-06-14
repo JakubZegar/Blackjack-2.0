@@ -1,13 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import {MenuButton} from '../partials/Button'
-import { HomePageContainer } from '../partials/HomePageElements'
+import {MenuButton} from '../partials/components/Button'
 
 export default function HomePage() {
   return (
-    <HomePageContainer>
-        <MenuButton to="/">Home</MenuButton>
+    <>
+        <MenuButton to="/game">Game</MenuButton>
         <MenuButton to="about">About</MenuButton>
-    </HomePageContainer>
+    </>
   )
 }

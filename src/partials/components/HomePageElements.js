@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import tabletopImage from '../assets/table-background.jpg'
+import tabletopImage from '../../assets/table-background.jpg'
 
 export const HomePageContainer = styled.div`
     background-image: url(${tabletopImage});
