@@ -1,14 +1,20 @@
-import React, {useEffect} from 'react'
-import useFetch from '../hooks/useFetch'
-import { Preloader } from '../partials/components/Preloader';
+import React, {useState, useEffect} from 'react'
 import { newDeckShuffledLink, decksCount } from '../const/api';
 import GameInterface from '../partials/GameInterface';
+import axios from 'axios';
 
 export default function Game() {
 
-  const {data, loaded, error} = useFetch(newDeckShuffledLink + decksCount);
+  const [deckId, setDeckId] = useState('')
+
+  useEffect(() => {
+    axios.get(newDeckShuffledLink + decksCount).then((result) => {
+      setDeckId(() => {return result.data.deck_id})
+    })
+  }, [])
+
 
   return (
-      loaded !== true ? <Preloader/> : (error !== null ? <>Error</> : data.deck_id && <GameInterface deck={data} />)
+    deckId !== undefined && deckId !== '' ? <GameInterface deck={deckId} /> : <></> 
   )
 }
