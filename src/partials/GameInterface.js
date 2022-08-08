@@ -10,14 +10,14 @@ export default function GameInterface({deck}) {
 
 
   useEffect(() => {
-    axios.get(mainLink + deck.deck_id + drawTwoCardsLink).then((result) => {
+    axios.get(mainLink + deck + drawTwoCardsLink).then((result) => {
       setPlayserCards(() => {return result.data.cards})
     })
-  }, [deck.deck_id])
+  }, [deck])
 
   const drawOneCard = () => {
     console.log("drawing...");
-    axios.get(mainLink + deck.deck_id + drawOneCardLink).then((result) => {
+    axios.get(mainLink + deck + drawOneCardLink).then((result) => {
       setPlayserCards((playerCards) => {return [...playerCards, ...result.data.cards]})
     })
 
