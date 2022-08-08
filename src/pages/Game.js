@@ -1,6 +1,5 @@
 import React from 'react'
 import useFetch from '../hooks/useFetch'
-import { Preloader } from '../partials/components/Preloader';
 import { newDeckShuffledLink, decksCount } from '../const/api';
 import GameInterface from '../partials/GameInterface';
 

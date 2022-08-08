@@ -1,9 +1,8 @@
 import React from 'react'
 
-export default function Card({image}) {
+export default function Card({image, text}) {
 
-  console.log(image)
   return (
-    <img src={image}/>
+    <img alt={text} src={image}/>
   )
 }

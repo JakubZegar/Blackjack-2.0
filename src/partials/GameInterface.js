@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react'
 import { mainLink, drawTwoCardsLink, drawOneCardLink } from '../const/api';
-import useFetch from '../hooks/useFetch';
 import { StyledCard } from './components/GameElements';
 import { Preloader } from './components/Preloader';
 
@@ -14,7 +13,7 @@ export default function GameInterface({deck}) {
     axios.get(mainLink + deck.deck_id + drawTwoCardsLink).then((result) => {
       setPlayserCards(() => {return result.data.cards})
     })
-  }, [])
+  }, [deck.deck_id])
 
   const drawOneCard = () => {
     console.log("drawing...");
@@ -35,7 +34,7 @@ export default function GameInterface({deck}) {
     <div>
         {
           playerCards.map((card, index) => {
-            return <StyledCard key={index} image={card.image}/>
+            return <StyledCard key={index} text={card.name} image={card.image}/>
           })
         }
         <button onClick={drawOneCard} >Dobierz karty</button>
