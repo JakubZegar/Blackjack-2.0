@@ -1,23 +1,21 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 const useFetch = (url, options = null) => {
-  const [load, setLoad] = useState(false)
 
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {(    
-        async function () {
-            await fetch(url, options)
-            .then(res => res.json())
-            .then(data => {
-                setData(data)
-                setLoaded(true);    
-            })
-            .catch( error => setError(error) )
-        }
-    )() }, []);
+
+      axios.get(url).then((response) =>{
+        setData(response.data)
+        setLoaded(true);    
+      }).catch((error) => {
+        setError(() => {return error})
+      })
+    )() }, [options, url]);
 
   return {data, error, loaded}
 }
