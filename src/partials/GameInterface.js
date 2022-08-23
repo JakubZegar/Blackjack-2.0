@@ -1,16 +1,17 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react'
 import { mainLink, drawTwoCardsLink, drawOneCardLink } from '../const/api';
-import { GameContainer, HandContainer, MiddleContainer, SideContainer, StyledCard } from './components/GameElements';
+import { GameContainer, HandContainer, MiddleContainer, PlayerSection, SideContainer, StyledCard } from './components/GameElements';
 import { Preloader } from './components/Preloader';
 import ReversableCard from './components/ReversableCard';
+import Points from './Points';
 
 export default function GameInterface({deck}) {
 
   const [playerCards, setPlayserCards] = useState([])
   const [crouperCards, sertCroupierCards] = useState([])
 
-  const [isReversed, setIsReversed] = useState(false)
+  const [isCroupierCardReversed, setIsCroupierCardReversed] = useState(false)
 
   useEffect(() => {
     axios.get(mainLink + deck + drawTwoCardsLink).then((result) => {
@@ -35,10 +36,6 @@ export default function GameInterface({deck}) {
     console.log(playerCards);
   }, [playerCards])
   
-  const setReversed = () => {
-    setIsReversed((cardState) => { return !cardState})
-  }
-
   return (
     playerCards.length > 0 ? 
     <GameContainer>
@@ -46,21 +43,28 @@ export default function GameInterface({deck}) {
       </SideContainer>
 
       <MiddleContainer>
-        <HandContainer onClick={setReversed} >
-        {
-          crouperCards.map((card, index) => {
-            return <ReversableCard key={index} isReversed={isReversed} text={card.name} aversImage={card.image} />
-          })
-        }
-        </HandContainer>
-        <HandContainer>
+        <PlayerSection>
+          <HandContainer onClick={drawOneCard}>
+          {
+            crouperCards.map((card, index) => {
+              return <ReversableCard key={index} isReversed={isCroupierCardReversed} text={card.name} aversImage={card.image} />
+            })
+          }
+          </HandContainer>
 
-        {
-          playerCards.map((card, index) => {
-            return <StyledCard key={index} text={card.name} image={card.image}/>
-          })
-        }
-        </HandContainer>
+          <Points cards={crouperCards} />
+        </PlayerSection>
+
+        <PlayerSection>
+          <Points cards={playerCards} />
+          <HandContainer>
+            {
+              playerCards.map((card, index) => {
+                return <StyledCard key={index} text={card.name} image={card.image}/>
+              })
+            }
+          </HandContainer>
+        </PlayerSection>
       </MiddleContainer>
 
       <SideContainer>

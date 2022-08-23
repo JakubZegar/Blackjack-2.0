@@ -1,4 +1,5 @@
 import styled from "styled-components/macro";
+import {colors} from "../../const/colors"
 
 export const StyledCard = styled.div`
     background-image: ${({image}) => 'url(' + image + ')' };
@@ -42,4 +43,26 @@ export const HandContainer = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
+`
+
+export const PlayerSection = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+
+export const PointsWrapper = styled.div`
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin:8px;
+    border: 4px solid ${colors.border};
+    color: ${colors.text};
+    background-color: ${colors.hover};
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
 `
