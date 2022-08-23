@@ -7,13 +7,9 @@ function Points({cards}) {
 
   useEffect(() => {
     cards.map((card) => {
-        console.log(card);
-
         if(card.value === "ACE") {
-
             setPoints((points) => {return points + 1})
             setAlternativePoints((points) => {return points + 11})
-
         } else if (card.value === "QUEEN" || card.value === "JACK" || card.value === "KING") {
 
             setPoints((points) => {return points + 10})
@@ -22,7 +18,6 @@ function Points({cards}) {
         } else {
             setPoints((points) => {return points + parseInt(card.value)})
             setAlternativePoints((points) => {return points + parseInt(card.value)})
-
         }
     })
   
@@ -30,7 +25,7 @@ function Points({cards}) {
   
   return (
     <PointsWrapper>
-        {points}
+        {alternativePoints <= 21 ? alternativePoints : points}
     </PointsWrapper>
   ) 
 }
