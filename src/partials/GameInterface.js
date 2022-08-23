@@ -44,7 +44,7 @@ export default function GameInterface({deck}) {
 
       <MiddleContainer>
         <PlayerSection>
-          <HandContainer>
+          <HandContainer onClick={drawOneCard}>
           {
             crouperCards.map((card, index) => {
               return <ReversableCard key={index} isReversed={isCroupierCardReversed} text={card.name} aversImage={card.image} />

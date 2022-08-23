@@ -6,6 +6,9 @@ function Points({cards}) {
   const [alternativePoints, setAlternativePoints] = useState(0);
 
   useEffect(() => {
+    setPoints(() => {return 0})
+    setAlternativePoints(() => {return 0})
+
     cards.map((card) => {
         if(card.value === "ACE") {
             setPoints((points) => {return points + 1})
