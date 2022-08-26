@@ -5,4 +5,8 @@ export const ActionContainer = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
+
+    @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `

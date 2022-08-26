@@ -43,6 +43,7 @@ export const HandContainer = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 `
 
 export const PlayerSection = styled.div`
