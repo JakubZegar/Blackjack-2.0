@@ -17,11 +17,11 @@ function Points({cards}) {
 
             setPoints((points) => {return points + 10})
             setAlternativePoints((points) => {return points + 10})
-
         } else {
             setPoints((points) => {return points + parseInt(card.value)})
             setAlternativePoints((points) => {return points + parseInt(card.value)})
         }
+        return;
     })
   
   }, [cards])
