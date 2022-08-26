@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react'
 import { mainLink, drawTwoCardsLink, drawOneCardLink } from '../const/api';
+import Actions from './Actions';
 import { GameContainer, HandContainer, MiddleContainer, PlayerSection, SideContainer, StyledCard } from './components/GameElements';
 import { Preloader } from './components/Preloader';
 import ReversableCard from './components/ReversableCard';
@@ -44,7 +45,7 @@ export default function GameInterface({deck}) {
 
       <MiddleContainer>
         <PlayerSection>
-          <HandContainer onClick={drawOneCard}>
+          <HandContainer>
           {
             crouperCards.map((card, index) => {
               return <ReversableCard key={index} isReversed={isCroupierCardReversed} text={card.name} aversImage={card.image} />
@@ -54,6 +55,8 @@ export default function GameInterface({deck}) {
 
           <Points cards={crouperCards} />
         </PlayerSection>
+
+        <Actions drawFunction={drawOneCard}/>
 
         <PlayerSection>
           <Points cards={playerCards} />
