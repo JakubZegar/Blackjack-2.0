@@ -10,9 +10,14 @@ import Points from './Points';
 export default function GameInterface({deck}) {
 
   const [playerCards, setPlayserCards] = useState([])
-  const [crouperCards, sertCroupierCards] = useState([])
+  const [crouperCards, setCroupierCards] = useState([])
 
   const [isCroupierCardReversed, setIsCroupierCardReversed] = useState(false)
+
+  const [roundEnded, setRoundEnded] = useState({
+    player: false,
+    computer: false,
+  })
 
   useEffect(() => {
     axios.get(mainLink + deck + drawTwoCardsLink).then((result) => {
@@ -20,17 +25,27 @@ export default function GameInterface({deck}) {
     }).then(() => {
       
       axios.get(mainLink + deck + drawTwoCardsLink).then((result) => {
-        sertCroupierCards(() => {return result.data.cards})
+        setCroupierCards(() => {return result.data.cards})
       })
     })
 
 
   }, [deck])
 
+  useEffect(() => {
+    console.log(roundEnded);
+  }, [roundEnded.player])
+  
+
   const drawOneCard = () => {
     axios.get(mainLink + deck + drawOneCardLink).then((result) => {
       setPlayserCards((playerCards) => {return [...playerCards, ...result.data.cards]})
     })
+  }
+
+  const passRound = () => {
+    setIsCroupierCardReversed(() => {return true})
+    setRoundEnded((prevRoundStatus) => {return {...prevRoundStatus, player: true}})
   }
 
   useEffect(() => {
@@ -47,16 +62,24 @@ export default function GameInterface({deck}) {
         <PlayerSection>
           <HandContainer>
           {
+            isCroupierCardReversed === false && crouperCards.length === 2
+            ? 
+            <>
+              <StyledCard text={crouperCards[0].name} image={crouperCards[0].image}/>
+              <ReversableCard text={crouperCards[1].name} image={crouperCards[1].image}/>
+            </>
+
+            :
             crouperCards.map((card, index) => {
               return <ReversableCard key={index} isReversed={isCroupierCardReversed} text={card.name} aversImage={card.image} />
             })
           }
           </HandContainer>
 
-          <Points cards={crouperCards} />
+          <Points cards={crouperCards} isCroupierCardReversed={isCroupierCardReversed} />
         </PlayerSection>
 
-        <Actions drawFunction={drawOneCard}/>
+        <Actions drawFunction={drawOneCard} passRound={passRound}/>
 
         <PlayerSection>
           <Points cards={playerCards} />
