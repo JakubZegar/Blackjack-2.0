@@ -32,9 +32,9 @@ export default function GameInterface({deck}) {
 
   }, [deck])
 
-  useEffect(() => {
-    console.log(roundEnded);
-  }, [roundEnded.player])
+  // useEffect(() => {
+  //   console.log(roundEnded.player);
+  // }, [roundEnded.player])
   
 
   const drawOneCard = () => {
@@ -82,7 +82,7 @@ export default function GameInterface({deck}) {
         <Actions drawFunction={drawOneCard} passRound={passRound}/>
 
         <PlayerSection>
-          <Points cards={playerCards} />
+          <Points player={true} cards={playerCards} />
           <HandContainer>
             {
               playerCards.map((card, index) => {
