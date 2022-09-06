@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import { mainLink, drawTwoCardsLink, drawOneCardLink } from '../const/api';
 import Actions from './Actions';
 import { GameContainer, HandContainer, MiddleContainer, PlayerSection, SideContainer, StyledCard } from './components/GameElements';
@@ -11,6 +11,11 @@ export default function GameInterface({deck}) {
 
   const [playerCards, setPlayserCards] = useState([])
   const [crouperCards, setCroupierCards] = useState([])
+
+  const [points, setPoints] = useState({
+    player: 0,
+    computer: 0,
+  })
 
   const [isCroupierCardReversed, setIsCroupierCardReversed] = useState(false)
 
@@ -32,11 +37,6 @@ export default function GameInterface({deck}) {
 
   }, [deck])
 
-  // useEffect(() => {
-  //   console.log(roundEnded.player);
-  // }, [roundEnded.player])
-  
-
   const drawOneCard = () => {
     axios.get(mainLink + deck + drawOneCardLink).then((result) => {
       setPlayserCards((playerCards) => {return [...playerCards, ...result.data.cards]})
@@ -51,6 +51,19 @@ export default function GameInterface({deck}) {
   useEffect(() => {
     console.log(playerCards);
   }, [playerCards])
+
+  const setPlayerPoints = useCallback((points) => {
+    setPoints((prevPoints) => {return {...prevPoints, player: points}})
+  }, []);
+
+  const setComputerPoints = useCallback((points) => {
+    setPoints((prevPoints) => {return {...prevPoints, computer: points}})
+  }, []);
+
+  useEffect(() => {
+    console.log(points);
+  }, [points])
+
   
   return (
     playerCards.length > 0 ? 
@@ -76,13 +89,13 @@ export default function GameInterface({deck}) {
           }
           </HandContainer>
 
-          <Points cards={crouperCards} isCroupierCardReversed={isCroupierCardReversed} />
+          <Points cards={crouperCards} isCroupierCardReversed={isCroupierCardReversed} setPointMethod={setComputerPoints}/>
         </PlayerSection>
 
         <Actions drawFunction={drawOneCard} passRound={passRound}/>
 
         <PlayerSection>
-          <Points player={true} cards={playerCards} />
+          <Points player={true} cards={playerCards} setPointMethod={setPlayerPoints}/>
           <HandContainer>
             {
               playerCards.map((card, index) => {

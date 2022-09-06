@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { PointsWrapper } from './components/GameElements';
 
-function Points({cards, player = false, isCroupierCardReversed = false}) {
+function Points({cards, player = false, isCroupierCardReversed = false, setPointMethod}) {
   const [points, setPoints] = useState(0);
   const [alternativePoints, setAlternativePoints] = useState(0);
 
@@ -19,8 +19,14 @@ function Points({cards, player = false, isCroupierCardReversed = false}) {
         countPoints(cards[0])
       }
     }
+
+    // setPointMethod(alternativePoints <= 21 ? alternativePoints : points);
         
   }, [cards, isCroupierCardReversed, player])
+
+  useEffect(() => {
+    setPointMethod(alternativePoints <= 21 ? alternativePoints : points)
+  }, [points, alternativePoints, setPointMethod])
 
   const countPoints = (card) => {
     if(card.value === "ACE") {
