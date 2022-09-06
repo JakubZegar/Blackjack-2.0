@@ -13,7 +13,6 @@ export default function Game() {
     })
   }, [])
 
-
   return (
     deckId !== undefined && deckId !== '' ? <GameInterface deck={deckId} /> : <></> 
   )

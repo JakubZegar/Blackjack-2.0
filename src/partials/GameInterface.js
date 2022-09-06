@@ -11,13 +11,12 @@ export default function GameInterface({deck}) {
 
   const [playerCards, setPlayserCards] = useState([])
   const [crouperCards, setCroupierCards] = useState([])
+  const [isCroupierCardReversed, setIsCroupierCardReversed] = useState(false);
 
   const [points, setPoints] = useState({
     player: 0,
     computer: 0,
   })
-
-  const [isCroupierCardReversed, setIsCroupierCardReversed] = useState(false)
 
   const [roundEnded, setRoundEnded] = useState({
     player: false,
@@ -33,8 +32,6 @@ export default function GameInterface({deck}) {
         setCroupierCards(() => {return result.data.cards})
       })
     })
-
-
   }, [deck])
 
   const drawOneCard = () => {
@@ -43,14 +40,10 @@ export default function GameInterface({deck}) {
     })
   }
 
-  const passRound = () => {
+  const passRound = useCallback(() => {
     setIsCroupierCardReversed(() => {return true})
     setRoundEnded((prevRoundStatus) => {return {...prevRoundStatus, player: true}})
-  }
-
-  useEffect(() => {
-    console.log(playerCards);
-  }, [playerCards])
+  },[]);
 
   const setPlayerPoints = useCallback((points) => {
     setPoints((prevPoints) => {return {...prevPoints, player: points}})
@@ -89,13 +82,13 @@ export default function GameInterface({deck}) {
           }
           </HandContainer>
 
-          <Points cards={crouperCards} isCroupierCardReversed={isCroupierCardReversed} setPointMethod={setComputerPoints}/>
+          {crouperCards.length > 0 && <Points cards={crouperCards} isCroupierCardReversed={isCroupierCardReversed} setPointMethod={setComputerPoints}/>}
         </PlayerSection>
 
         <Actions drawFunction={drawOneCard} passRound={passRound}/>
 
         <PlayerSection>
-          <Points player={true} cards={playerCards} setPointMethod={setPlayerPoints}/>
+          {playerCards.length > 0 ? <Points player={true} cards={playerCards} setPointMethod={setPlayerPoints}/> : <></> }
           <HandContainer>
             {
               playerCards.map((card, index) => {
