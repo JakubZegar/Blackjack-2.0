@@ -1,14 +1,25 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import { PointsWrapper } from './components/GameElements';
 
-function Points({cards, player = false, isCroupierCardReversed = false, setPointMethod}) {
+import {PointsType, DrawCardResponse, DrawedCard} from '../types/global';
+
+type Props = {
+  cards: DrawedCard[],
+  player?: boolean,
+  isCroupierCardReversed?: boolean,
+  setPointMethod: (points: number) => void
+}
+
+type TCountPoints = Array<number>;
+
+function Points({cards, player = false, isCroupierCardReversed = false, setPointMethod}: Props) {
   const [points, setPoints] = useState(0);
 
   useEffect(() => {
     console.log('Points renders');
   });
 
-  const countPoints = useCallback((card) => {
+  const countPoints = useCallback((card: DrawedCard) => {
     let [points, alternativePoints] = [0,0]
 
     if(card.value === "ACE") {
@@ -27,17 +38,20 @@ function Points({cards, player = false, isCroupierCardReversed = false, setPoint
 
   useEffect(() => {
     if(cards.length > 0){
-      let [sumPoints, sumAlternativePoints] = [0,0]
+      let [sumPoints, sumAlternativePoints]: [number, number] = [0,0]
       
+      let cardValues: TCountPoints;
       if(isCroupierCardReversed === true || player === true) {
-        cards.map((card) => {
-          let cardValues = countPoints(card)
+
+        cards.map((card: DrawedCard) => {
+          cardValues = countPoints(card)
           sumPoints += cardValues[0];
           sumAlternativePoints += cardValues[1]
           return null;
         })
+
       } else {
-        let cardValues = countPoints(cards[0])
+        cardValues = countPoints(cards[0])
         sumPoints += cardValues[0];
         sumAlternativePoints += cardValues[1]
       }
@@ -54,7 +68,6 @@ function Points({cards, player = false, isCroupierCardReversed = false, setPoint
 
   useEffect(() => {
     if(points !== 0){
-      console.log("policzyliśmy punkty: ", points);
       setPointMethod(points)
     }
   }, [points, setPointMethod])

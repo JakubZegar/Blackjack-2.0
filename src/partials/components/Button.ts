@@ -32,7 +32,7 @@ export const MenuButton = styled(Link)`
         background-color: ${colors.hover};
     }
 `
-export const Button = styled.div`
+export const Button = styled.div<{smallMargin: boolean, isEnabled: boolean}>`
     border-radius: 20px;
     background: ${colors.hover};
     white-space: nowrap;

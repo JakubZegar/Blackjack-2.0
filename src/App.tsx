@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import HomePage from './pages/HomePage';
 import Game from './pages/Game';

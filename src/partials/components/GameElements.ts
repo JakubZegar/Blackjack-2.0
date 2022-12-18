@@ -1,7 +1,7 @@
 import styled from "styled-components/macro";
 import {colors} from "../../const/colors"
 
-export const StyledCard = styled.div`
+export const StyledCard = styled.div<{image: string}>`
     background-image: ${({image}) => 'url(' + image + ')' };
     background-size:cover;
     background-position:center;

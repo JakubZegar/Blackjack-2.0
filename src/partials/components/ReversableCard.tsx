@@ -11,7 +11,7 @@ const CardContainer = styled.div`
     margin: 4px;
 `
 
-const Card = styled.div`
+const Card = styled.div<{reversed: boolean}>`
     position: absolute;
     width: 100%;
     height: 100%;
@@ -20,7 +20,7 @@ const Card = styled.div`
     transform: ${({reversed}) => (reversed ? 'rotateY(180deg)' : 'none')};
 `
 
-const Avers = styled.div`
+const Avers = styled.div<{aversImage: string}>`
     position: absolute;
     width:100%;
     height: 100%;
@@ -43,7 +43,12 @@ const Revers = styled.div`
     border-radius: 4px;
 `
 
-function ReversableCard({aversImage, isReversed}) {
+type Props = {
+    aversImage: string,
+    isReversed: boolean
+}
+
+function ReversableCard({aversImage, isReversed}: Props) {
     return (
         <CardContainer>
             <Card reversed={!isReversed}>

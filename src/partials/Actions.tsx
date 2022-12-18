@@ -2,7 +2,12 @@ import React from 'react'
 import { ActionContainer } from './components/ActionsElements'
 import { Button } from './components/Button';
 
-export default function Actions({drawFunction, passRound}) {
+type Props = {
+  drawFunction: () => void,
+  passRound:  () => void,
+} 
+
+export default function Actions({drawFunction, passRound}: Props) {
   return (
     <ActionContainer>
         <Button isEnabled={true} onClick={drawFunction}>Draw</Button>

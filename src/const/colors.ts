@@ -1,4 +1,6 @@
-export const colors = {
+import {Colors} from '../types/global';
+
+export const colors: Colors = {
     primary: '#075e31',
     hover: '#780900',
     hoverDark: '#630e07',
