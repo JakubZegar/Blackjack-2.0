@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { DeckResponse } from '../global'
+import { DeckResponse } from '../types/global'
 import { newDeckShuffledLink, decksCount } from '../const/api';
 import GameInterface from '../partials/GameInterface';
 import axios, { AxiosResponse } from 'axios';
