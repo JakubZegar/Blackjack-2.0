@@ -8,6 +8,9 @@ import { GameContainer, HandContainer, MiddleContainer, PlayerSection, SideConta
 import { Preloader } from './components/Preloader';
 import ReversableCard from './components/ReversableCard';
 import Points from './Points';
+import { useDispatch, useSelector } from 'react-redux' 
+import { bindActionCreators } from 'redux';
+import { actionCreators, ReducerStateType } from '../state';
 
 type Props = {
   deck: string
@@ -20,8 +23,13 @@ type RoundStatus = {
 
 export default function GameInterface({deck}: Props) {
 
-  const [playerCards, setPlayserCards] = useState<DrawedCard[]>([]);
-  const [crouperCards, setCroupierCards] = useState<DrawedCard[]>([]);
+  const dispatch = useDispatch();
+
+
+  const {drawPlayerCards, drawCroupierCards} = bindActionCreators(actionCreators, dispatch)
+
+  const state = useSelector((state: ReducerStateType) => state );
+
   const [isCroupierCardReversed, setIsCroupierCardReversed] = useState<boolean>(false);
 
   const [points, setPoints] = useState<PointsType>({
@@ -36,26 +44,20 @@ export default function GameInterface({deck}: Props) {
 
   useEffect(() => {
     axios.get<DrawCardResponse>(mainLink + deck + drawTwoCardsLink).then((result: AxiosResponse<DrawCardResponse>) => {
-      setPlayserCards(() => {return result.data.cards})
+      drawPlayerCards(result.data.cards);
+
     }).then(() => {
       
       axios.get<DrawCardResponse>(mainLink + deck + drawTwoCardsLink).then((result: AxiosResponse<DrawCardResponse>) => {
-        
-        setCroupierCards(() => {return result.data.cards})
+        drawCroupierCards(result.data.cards)
       })
     })
   }, [deck])
 
-  useEffect(() => {
-    if(crouperCards.length > 0) {
-      console.log(crouperCards[0].image);
-    }
-  }, [crouperCards])
   
-
   const drawOneCard = () => {
     axios.get<DrawCardResponse>(mainLink + deck + drawOneCardLink).then((result: AxiosResponse<DrawCardResponse>) => {
-      setPlayserCards((playerCards: DrawedCard[]) => {return [...playerCards, ...result.data.cards]})
+      drawPlayerCards(result.data.cards);
     })
   }
 
@@ -77,7 +79,7 @@ export default function GameInterface({deck}: Props) {
 
   
   return (
-    playerCards.length > 0 ? 
+    state.playerCard.length > 0 ? 
     <GameContainer>
       <SideContainer>
       </SideContainer>
@@ -86,30 +88,30 @@ export default function GameInterface({deck}: Props) {
         <PlayerSection>
           <HandContainer>
           {
-            isCroupierCardReversed === false && crouperCards.length === 2
+            isCroupierCardReversed === false && state.croupierCard.length === 2
             ? 
             <>
-              <StyledCard image={crouperCards[0].image} />
-              <ReversableCard aversImage={crouperCards[1].image} isReversed={isCroupierCardReversed} />
+              <StyledCard image={state.croupierCard[0].image} />
+              <ReversableCard aversImage={state.croupierCard[1].image} isReversed={isCroupierCardReversed} />
             </>
 
             :
-            crouperCards.map((card, index) => {
+            state.croupierCard.map((card, index) => {
               return <ReversableCard key={index} isReversed={isCroupierCardReversed} aversImage={card.image} />
             })
           }
           </HandContainer>
 
-          {crouperCards.length > 0 && <Points cards={crouperCards} isCroupierCardReversed={isCroupierCardReversed} setPointMethod={setComputerPoints}/>}
+          {state.croupierCard.length > 0 && <Points cards={state.croupierCard} isCroupierCardReversed={isCroupierCardReversed} setPointMethod={setComputerPoints}/>}
         </PlayerSection>
 
         <Actions drawFunction={drawOneCard} passRound={passRound}/>
 
         <PlayerSection>
-          {playerCards.length > 0 ? <Points player={true} cards={playerCards} setPointMethod={setPlayerPoints}/> : <></> }
+          {state.playerCard.length > 0 ? <Points player={true} cards={state.playerCard} setPointMethod={setPlayerPoints}/> : <></> }
           <HandContainer>
             {
-              playerCards.map((card: DrawedCard, index: number) => {
+              state.playerCard.map((card: DrawedCard, index: number) => {
                 return <StyledCard key={index} image={card.image}/>
               })
             }

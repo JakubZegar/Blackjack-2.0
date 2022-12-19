@@ -10,6 +10,7 @@ import {
   Route,
 } from "react-router-dom";
 import { HomePageContainer } from './partials/components/HomePageElements';
+
 function App() {
   return (
     <HomePageContainer>
