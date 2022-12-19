@@ -1,8 +1,12 @@
 import {combineReducers} from 'redux';
-import cardReducer from './cardsReducer'
+import playerCardReducer from './playerCardsReducer'
+import croupierCardReducer from './croupierCardsReducer'
 
 const reducers = combineReducers({
-    card: cardReducer,
+    playerCard: playerCardReducer,
+    croupierCard: croupierCardReducer
 })
 
 export default reducers;
+
+export type ReducerStateType = ReturnType<typeof reducers>

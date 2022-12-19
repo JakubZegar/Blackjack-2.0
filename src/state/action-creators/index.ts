@@ -1,21 +1,38 @@
 import { DrawedCard } from "../../types/global";
-import { CardActionType } from "../action-types";
+import { PlayerCardActionType, CroupierCardActionType } from "../action-types";
 import { Dispatch } from 'redux'
-import { CardsAction } from "../actions";
+import { PlayerCardsActionType, CroupierCardsActionType } from "../actions";
 
-export const drawCards = (cards: DrawedCard[]) => {
-    return (dipsatch: Dispatch<CardsAction>) => {
+export const drawPlayerCards = (cards: DrawedCard[]) => {
+    return (dipsatch: Dispatch<PlayerCardsActionType>) => {
         dipsatch({
-            type: CardActionType.DRAW,
+            type: PlayerCardActionType.DRAW,
             payload: cards
         })
     }
 }
 
-export const resetCards = () => {
-    return (dipsatch: Dispatch<CardsAction>) => {
+export const resetPlayerCards = () => {
+    return (dipsatch: Dispatch<PlayerCardsActionType>) => {
         dipsatch({
-            type: CardActionType.RESET
+            type: PlayerCardActionType.RESET
+        })
+    }
+}
+
+export const drawCroupierCards = (cards: DrawedCard[]) => {
+    return (dipsatch: Dispatch<CroupierCardsActionType>) => {
+        dipsatch({
+            type: CroupierCardActionType.DRAW,
+            payload: cards
+        })
+    }
+}
+
+export const resetCroupierCards = () => {
+    return (dipsatch: Dispatch<CroupierCardsActionType>) => {
+        dipsatch({
+            type: CroupierCardActionType.RESET
         })
     }
 }

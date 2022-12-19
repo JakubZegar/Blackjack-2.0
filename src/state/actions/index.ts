@@ -1,13 +1,24 @@
 import { DrawedCard } from "../../types/global";
-import { CardActionType } from "../action-types";
+import { PlayerCardActionType, CroupierCardActionType } from "../action-types";
 
-interface DrawAction {
-    type: CardActionType.DRAW
+interface DrawPlayerAction {
+    type: PlayerCardActionType.DRAW
     payload: DrawedCard[]
 }
 
-interface ResetAction {
-    type: CardActionType.RESET
+interface ResetPlayerAction {
+    type: PlayerCardActionType.RESET
 }
 
-export type CardsAction = DrawAction | ResetAction 
+interface DrawCroupierAction {
+    type: CroupierCardActionType.DRAW
+    payload: DrawedCard[]
+}
+
+interface ResetCroupierAction {
+    type: CroupierCardActionType.RESET
+}
+
+
+export type PlayerCardsActionType = DrawPlayerAction | ResetPlayerAction 
+export type CroupierCardsActionType = DrawCroupierAction | ResetCroupierAction 
