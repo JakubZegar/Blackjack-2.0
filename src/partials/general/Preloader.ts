@@ -10,18 +10,19 @@ const preloaderAnimation = keyframes`
 `
 
 export const Preloader = styled.div`
-
   &:after {
     content: "";
     display: block;
     width: 64px;
     height: 64px;
+
     margin: 8px;
+
     border-radius: 50%;
     border: 6px solid #fff;
     border-color: #fff transparent #fff transparent;
-    animation: ${preloaderAnimation} 1.2s linear infinite;
 
+    animation: ${preloaderAnimation} 1.2s linear infinite;
    }
 
 `

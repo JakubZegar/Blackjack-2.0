@@ -1,20 +1,17 @@
-import React, {useState, useEffect} from 'react'
-import { DeckResponse } from '../global'
-import { newDeckShuffledLink, decksCount } from '../const/api';
-import GameInterface from '../partials/GameInterface';
-import axios, { AxiosResponse } from 'axios';
+import React, { useState, useEffect } from 'react';
+
+import { cardService } from '../services/CardService';
+import GameInterface from '../partials/game/GameInterface';
 
 export default function Game() {
 
   const [deckId, setDeckId] = useState('')
 
   useEffect(() => {
-    axios.get<DeckResponse>(newDeckShuffledLink + decksCount).then((result: AxiosResponse<DeckResponse> ) => {
-      setDeckId(() => {return result.data.deck_id})
+    cardService.createDeck().then((deckId: string) => {
+      setDeckId(deckId)
     })
-  }, [])
+  }, []);
 
-  return (
-    deckId !== undefined && deckId !== '' ? <GameInterface deck={deckId} /> : <></> 
-  )
+  return Boolean(deckId) ? <GameInterface deck={deckId} /> : null;
 }

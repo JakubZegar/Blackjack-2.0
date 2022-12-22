@@ -1,15 +1,13 @@
 import React from 'react';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import HomePage from './pages/HomePage';
 import Game from './pages/Game';
 import Leaderboard from './pages/Leaderboard';
+import { HomePageContainer } from './partials/home/HomePageElements';
 
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
-import { HomePageContainer } from './partials/components/HomePageElements';
+import './App.css';
+
 function App() {
   return (
     <HomePageContainer>
