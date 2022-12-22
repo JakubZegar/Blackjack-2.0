@@ -20,7 +20,6 @@ type RoundStatus = {
 };
 
 export default function GameInterface({ deck }: Props) {
-  // NOTE jak głębokie może być zagnieżdżenie tych propsów? Może warto rozważyć context lub wyniesienie tego do hooka
 
   const [playerCards, setPlayerCards] = useState<DrawedCard[]>([]);
   const [crouperCards, setCroupierCards] = useState<DrawedCard[]>([]);
