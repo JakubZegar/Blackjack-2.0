@@ -43,11 +43,11 @@ export default function GameInterface({ deck }: Props) {
 
   }, [deck]);
 
-  const drawOneCard = (player:boolean = true) => {
+  const drawOneCard = useCallback((player:boolean = true) => {
     cardService.drawCards(deck, endpoints.drawOneCardLink).then( (result: DrawedCard[]) => {
       player ? setPlayerCards((prevCards) => {return [...prevCards, ...result]}) : setCroupierCards((prevCards) => {return [...prevCards, ...result]});
     })
-  };
+  }, []);
 
   const passRound = useCallback(() => {
     setIsCroupierCardReversed(() => {
