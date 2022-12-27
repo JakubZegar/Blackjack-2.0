@@ -73,5 +73,11 @@ export type TGameContext = {
   isCroupierCardReversed: boolean,
   setIsCroupierCardReversed: Dispatch<SetStateAction<boolean>>,
   drawOnGameStart: () => void,
-  drawOneCard: (player?: boolean) => void
+  drawOneCard: (player?) => void,
+  passRound: () => void,
 }
+
+export type RoundStatus = {
+  player: boolean;
+  computer: boolean;
+};

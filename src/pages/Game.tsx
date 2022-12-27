@@ -12,7 +12,9 @@ export default function Game() {
 
   useEffect(() => {
     cardService.createDeck().then((deckId: string) => {
-      contextSetDeckId(deckId);
+      if(Boolean(deckId)){
+        contextSetDeckId(deckId);
+      }
     })
   }, [contextSetDeckId]);
 

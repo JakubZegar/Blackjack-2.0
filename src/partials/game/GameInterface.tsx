@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useContext } from 'react';
 
 import Actions from '../actions/Actions';
 import { GameContainer, MiddleContainer, PlayerSection, SideContainer } from './GameElements';
@@ -6,67 +6,46 @@ import { Preloader } from '../general/Preloader';
 import Points from '../points/Points';
 import Hand from '../cards/Hand';
 
-import {GameContext, GameContextProvider} from '../../context/GameContext';
-
-type RoundStatus = {
-  player: boolean;
-  computer: boolean;
-};
+import {GameContext} from '../../context/GameContext';
 
 export default function GameInterface() {
 
   const gameContext = useContext(GameContext)
 
-  const [roundEnded, setRoundEnded] = useState<RoundStatus>({
-    player: false,
-    computer: false,
-  });
+  const playerCards = gameContext.playerCards
+  const croupierCards = gameContext.croupierCards
 
-  const croupierHandCards = gameContext.croupierCards.length > 0 ? <Hand isCardReversed={gameContext.isCroupierCardReversed} cards={gameContext.croupierCards} ></Hand> : null;
+  const croupierHandCards = croupierCards.length > 0 ? <Hand isCardReversed={gameContext.isCroupierCardReversed} cards={croupierCards} ></Hand> : null;
+  const playerHandsCards = playerCards.length > 0 ? <Hand cards={playerCards} ></Hand> : null;
+  const croupierPoints = croupierCards.length > 0 ? <Points cards={croupierCards} isCroupierCardReversed={gameContext.isCroupierCardReversed} /> : null
+  const playerPoints = playerCards.length > 0 ? <Points player={true} cards={playerCards}/> : null
 
-  const playerHandsCards = gameContext.playerCards.length > 0 ? <Hand cards={gameContext.playerCards} ></Hand> : null;
-
-  const croupierPoints = gameContext.croupierCards.length > 0 ? <Points cards={gameContext.croupierCards} isCroupierCardReversed={gameContext.isCroupierCardReversed} /> : null
-
-  const playerPoints = gameContext.playerCards.length > 0 ? <Points player={true} cards={gameContext.playerCards}/> : null
-
-  const passRound = useCallback(() => {
-    gameContext.setIsCroupierCardReversed(() => {
-      return true;
-    });
-    setRoundEnded((prevRoundStatus: RoundStatus) => {
-      return { ...prevRoundStatus, player: true };
-    });
-  }, []);
-
-  if(gameContext.playerCards.length <= 0) {
+  if(playerCards.length <= 0) {
     return <Preloader/>
   }
 
   return (
-    <GameContextProvider>
-      <GameContainer>
-        <SideContainer></SideContainer>
+    <GameContainer>
+      <SideContainer></SideContainer>
 
-        <MiddleContainer>
+      <MiddleContainer>
 
-          <PlayerSection>
-            {croupierHandCards}
-            {croupierPoints}
-          </PlayerSection>
+        <PlayerSection>
+          {croupierHandCards}
+          {croupierPoints}
+        </PlayerSection>
 
-          <Actions drawFunction={gameContext.drawOneCard} passRound={passRound} />
+        <Actions/>
 
-          <PlayerSection>
-            {playerPoints}
-            {playerHandsCards}
-          </PlayerSection>
+        <PlayerSection>
+          {playerPoints}
+          {playerHandsCards}
+        </PlayerSection>
 
-        </MiddleContainer>
+      </MiddleContainer>
 
-        <SideContainer></SideContainer>
-      </GameContainer>
-    </GameContextProvider>
+      <SideContainer></SideContainer>
+    </GameContainer>
 
   );
 }
