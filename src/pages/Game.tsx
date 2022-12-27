@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
+
+import GameInterface from '../partials/game/GameInterface';
 
 import { cardService } from '../services/CardService';
-import GameInterface from '../partials/game/GameInterface';
+import { GameContext } from '../context/GameContext';
 
 export default function Game() {
 
-  const [deckId, setDeckId] = useState('')
+  const gameContext = useContext(GameContext);
+  const contextSetDeckId = gameContext.setDeckId
 
   useEffect(() => {
     cardService.createDeck().then((deckId: string) => {
-      setDeckId(deckId)
+      contextSetDeckId(deckId);
     })
-  }, []);
+  }, [contextSetDeckId]);
 
-  return Boolean(deckId) ? <GameInterface deck={deckId} /> : null;
+  return Boolean(gameContext.deckId) ? <GameInterface/> : null;
 }

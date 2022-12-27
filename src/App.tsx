@@ -7,18 +7,22 @@ import Leaderboard from './pages/Leaderboard';
 import { HomePageContainer } from './partials/home/HomePageElements';
 
 import './App.css';
+import { GameContextProvider } from './context/GameContext';
 
 function App() {
   return (
-    <HomePageContainer>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage/>} />
-          <Route path="/game" element={<Game/>} />
-          <Route path="/leaderboard" element={<Leaderboard/>} />
-        </Routes>
-      </BrowserRouter>
-    </HomePageContainer>
+    <GameContextProvider>
+      <HomePageContainer>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage/>} />
+            <Route path="/game" element={<Game/>} />
+            <Route path="/leaderboard" element={<Leaderboard/>} />
+          </Routes>
+        </BrowserRouter>
+      </HomePageContainer>
+    </GameContextProvider>
+
   );
 }
 

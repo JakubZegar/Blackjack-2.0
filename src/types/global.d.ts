@@ -1,4 +1,4 @@
-
+import { SetStateAction, Dispatch} from 'react'
 
 export type Colors = {
     primary: string,
@@ -63,4 +63,15 @@ export type DrawedCard = {
 type CardImages = {
     svg: string, 
     png: string
+}
+
+export type TGameContext = {
+  deckId: string,
+  setDeckId: Dispatch<SetStateAction<string>>
+  playerCards: DrawedCard[],
+  croupierCards: DrawedCard[],
+  isCroupierCardReversed: boolean,
+  setIsCroupierCardReversed: Dispatch<SetStateAction<boolean>>,
+  drawOnGameStart: () => void,
+  drawOneCard: (player?: boolean) => void
 }
