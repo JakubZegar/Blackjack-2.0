@@ -1,6 +1,5 @@
 const mainLink = "https://deckofcardsapi.com/api/deck/";
-const newDeckShuffledLink =
-  "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=";
+const newDeckShuffledLink = "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=";
 const drawOneCardLink = "/draw/?count=1";
 const drawTwoCardsLink = "/draw/?count=2";
 const drawFourCardsLink = "/draw/?count=4";

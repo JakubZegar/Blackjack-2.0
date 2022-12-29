@@ -24,8 +24,7 @@ export function GameContextProvider({ children }) {
 
   const [playerCards, setPlayerCards] = useState<DrawedCard[]>([]);
   const [croupierCards, setCroupierCards] = useState<DrawedCard[]>([]);
-  const [isCroupierCardReversed, setIsCroupierCardReversed] =
-    useState<boolean>(false);
+  const [isCroupierCardReversed, setIsCroupierCardReversed] = useState<boolean>(false);
 
   const [roundEnded, setRoundEnded] = useState({
     player: false,
@@ -33,29 +32,25 @@ export function GameContextProvider({ children }) {
   });
 
   const drawOnGameStart = useCallback(() => {
-    cardService
-      .drawCards(deckId, endpoints.drawFourCardsLink)
-      .then((result: DrawedCard[]) => {
-        setPlayerCards(result.slice(0, 2));
-        setCroupierCards(result.slice(2, 4));
-      });
+    cardService.drawCards(deckId, endpoints.drawFourCardsLink).then((result: DrawedCard[]) => {
+      setPlayerCards(result.slice(0, 2));
+      setCroupierCards(result.slice(2, 4));
+    });
   }, [deckId]);
 
   const drawOneCard = useCallback(
     (player = true) => {
-      cardService
-        .drawCards(deckId, endpoints.drawOneCardLink)
-        .then((result) => {
-          if (player) {
-            setPlayerCards((prevCards) => {
-              return [...prevCards, ...result];
-            });
-          } else {
-            setCroupierCards((prevCards) => {
-              return [...prevCards, ...result];
-            });
-          }
-        });
+      cardService.drawCards(deckId, endpoints.drawOneCardLink).then((result) => {
+        if (player) {
+          setPlayerCards((prevCards) => {
+            return [...prevCards, ...result];
+          });
+        } else {
+          setCroupierCards((prevCards) => {
+            return [...prevCards, ...result];
+          });
+        }
+      });
     },
     [deckId]
   );
@@ -90,9 +85,5 @@ export function GameContextProvider({ children }) {
     shuffleDeck,
   };
 
-  return (
-    <GameContext.Provider value={gameContextValue}>
-      {children}
-    </GameContext.Provider>
-  );
+  return <GameContext.Provider value={gameContextValue}>{children}</GameContext.Provider>;
 }

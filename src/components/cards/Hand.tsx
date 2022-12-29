@@ -3,17 +3,18 @@ import React, { useContext } from "react";
 import { DrawedCard } from "../../types/global";
 import { HandContainer, StyledCard } from "./CardElements";
 import ReversableCard from "./ReversableCard";
-import { GameContext } from "../../context/GameContext";
+
+import useGameContext from "../../hooks/useGameContext";
 
 export default function Hand({ player = false }) {
-  const gameContext = useContext(GameContext);
+  const { playerCards, croupierCards, isCroupierCardReversed } = useGameContext();
 
   let cards: DrawedCard[];
 
   if (player) {
-    cards = gameContext.playerCards;
+    cards = playerCards;
   } else {
-    cards = gameContext.croupierCards;
+    cards = croupierCards;
   }
 
   const reversedCards: JSX.Element[] = cards.map((card, index) => {
@@ -25,10 +26,7 @@ export default function Hand({ player = false }) {
       {!player && cards.length <= 2 ? (
         <>
           <StyledCard image={cards[0].image} />
-          <ReversableCard
-            aversImage={cards[1].image}
-            isReversed={gameContext.isCroupierCardReversed}
-          />
+          <ReversableCard aversImage={cards[1].image} isReversed={isCroupierCardReversed} />
         </>
       ) : (
         reversedCards

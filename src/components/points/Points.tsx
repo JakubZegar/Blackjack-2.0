@@ -1,32 +1,28 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { PointsWrapper } from "../points/PointsElements";
 
 import { DrawedCard } from "../../types/global";
 import pointsHelpers from "./PointsHelper";
 
-import { GameContext } from "../../context/GameContext";
+import useGameContext from "../../hooks/useGameContext";
 
 function Points({ player = false }) {
-  const gameContext = useContext(GameContext);
+  const { playerCards, croupierCards, isCroupierCardReversed } = useGameContext();
 
   const [points, setPoints] = useState(0);
 
   let cards: DrawedCard[];
 
   if (player) {
-    cards = gameContext.playerCards;
+    cards = playerCards;
   } else {
-    cards = gameContext.croupierCards;
+    cards = croupierCards;
   }
 
   useEffect(() => {
-    if (cards.length > 0) {
-      let [sumPoints, sumAlternativePoints] = pointsHelpers.getPointsOutcomes(
-        cards,
-        player,
-        gameContext.isCroupierCardReversed
-      );
+    if (cards.length) {
+      let [sumPoints, sumAlternativePoints] = pointsHelpers.getPointsOutcomes(cards, player, isCroupierCardReversed);
 
       if (sumAlternativePoints > 0 && sumAlternativePoints <= 21) {
         setPoints(() => {
@@ -38,7 +34,7 @@ function Points({ player = false }) {
         });
       }
     }
-  }, [cards, gameContext.isCroupierCardReversed, player]);
+  }, [cards, isCroupierCardReversed, player]);
 
   return <PointsWrapper>{points}</PointsWrapper>;
 }

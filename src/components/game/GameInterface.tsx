@@ -1,22 +1,17 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import Actions from "../actions/Actions";
-import {
-  GameContainer,
-  MiddleContainer,
-  PlayerSection,
-  SideContainer,
-} from "./GameElements";
+import { GameContainer, MiddleContainer, PlayerSection, SideContainer } from "./GameElements";
 import { Preloader } from "../general/Preloader";
 import Points from "../points/Points";
 import Hand from "../cards/Hand";
 
-import { GameContext } from "../../context/GameContext";
+import useGameContext from "../../hooks/useGameContext";
 
 export default function GameInterface() {
-  const playerCards = useContext(GameContext).playerCards;
+  const { playerCards } = useGameContext();
 
-  if (playerCards.length <= 0) {
+  if (!playerCards.length) {
     return <Preloader />;
   }
 

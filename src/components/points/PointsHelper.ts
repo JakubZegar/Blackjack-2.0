@@ -18,11 +18,7 @@ const getPointsFromCard = (card: DrawedCard) => {
   if (card.value === CardNames.ACE) {
     points = 1;
     alternativePoints = 11;
-  } else if (
-    card.value === CardNames.JACK ||
-    card.value === CardNames.QUEEN ||
-    card.value === CardNames.KING
-  ) {
+  } else if (card.value === CardNames.JACK || card.value === CardNames.QUEEN || card.value === CardNames.KING) {
     points = 10;
     alternativePoints = 10;
   } else {
@@ -36,11 +32,7 @@ const getPointsFromCard = (card: DrawedCard) => {
   };
 };
 
-const getPointsOutcomes = (
-  cards: DrawedCard[],
-  isCroupierCardReversed: boolean,
-  player: boolean
-) => {
+const getPointsOutcomes = (cards: DrawedCard[], isCroupierCardReversed: boolean, player: boolean) => {
   let cardValues: TCountPoints;
   let [sumPoints, sumAlternativePoints] = [0, 0];
 

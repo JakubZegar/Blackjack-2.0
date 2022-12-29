@@ -15,9 +15,9 @@ function App() {
       <HomePageContainer>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/game" element={<Game />} />
-            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path='/' element={<HomePage />} />
+            <Route path='/game' element={<Game />} />
+            <Route path='/leaderboard' element={<Leaderboard />} />
           </Routes>
         </BrowserRouter>
       </HomePageContainer>

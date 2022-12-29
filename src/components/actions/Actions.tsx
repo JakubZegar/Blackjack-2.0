@@ -1,22 +1,22 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import { ActionContainer } from "./ActionsElements";
 import { Button } from "../general/Button";
 
-import { GameContext } from "../../context/GameContext";
+import useGameContext from "../../hooks/useGameContext";
 
 export default function Actions() {
-  const gameContext = useContext(GameContext);
+  const { drawOneCard, passRound, shuffleDeck } = useGameContext();
   return (
     <ActionContainer>
-      <Button isEnabled={true} onClick={gameContext.drawOneCard}>
+      <Button isEnabled={true} onClick={drawOneCard}>
         Draw
       </Button>
       <Button isEnabled={true}>Double</Button>
-      <Button isEnabled={true} onClick={gameContext.passRound}>
+      <Button isEnabled={true} onClick={passRound}>
         Pass
       </Button>
-      <Button isEnabled={true} onClick={gameContext.shuffleDeck}>
+      <Button isEnabled={true} onClick={shuffleDeck}>
         RESET
       </Button>
     </ActionContainer>

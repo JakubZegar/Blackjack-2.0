@@ -45,8 +45,7 @@ export const Button = styled.div<{ smallMargin?: boolean; isEnabled: boolean }>`
   background: ${colors.hover};
   padding: 8px 16px;
   margin: 4px 0;
-  margin: ${({ smallMargin }) =>
-    smallMargin ? "4px 4px 4px 4px " : "8px 8px"};
+  margin: ${({ smallMargin }) => (smallMargin ? "4px 4px 4px 4px " : "8px 8px")};
 
   white-space: nowrap;
   color: ${colors.text};
@@ -58,7 +57,6 @@ export const Button = styled.div<{ smallMargin?: boolean; isEnabled: boolean }>`
     transition: all 0.2s ease-in-out;
     scale: 1.1;
 
-    background: ${({ isEnabled }) =>
-      isEnabled ? colors.hoverDark : colors.secondary};
+    background: ${({ isEnabled }) => (isEnabled ? colors.hoverDark : colors.secondary)};
   }
 `;
