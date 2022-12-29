@@ -1,5 +1,5 @@
-import React from 'react';
-import { CardContainer, SingleCard, Avers, Revers } from './CardElements';
+import React from "react";
+import { CardContainer, SingleCard, Avers, Revers } from "./CardElements";
 
 type Props = {
   aversImage: string;

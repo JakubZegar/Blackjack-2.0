@@ -1,21 +1,20 @@
-import { TEndpoints } from "../types/global";
+const mainLink = "https://deckofcardsapi.com/api/deck/";
+const newDeckShuffledLink =
+  "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=";
+const drawOneCardLink = "/draw/?count=1";
+const drawTwoCardsLink = "/draw/?count=2";
+const drawFourCardsLink = "/draw/?count=4";
+const drawXCards = "/draw/?count=";
+const reshuffleDeckLink = "/shuffle/";
+const decksCount = 6;
 
-const mainLink: string = "https://deckofcardsapi.com/api/deck/";
-const newDeckShuffledLink: string = "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=";
-const drawOneCardLink: string = "/draw/?count=1";
-const drawTwoCardsLink: string = "/draw/?count=2";
-const drawFourCardsLink: string = "/draw/?count=4";
-const drawXCards: string = "/draw/?count=";
-const reshuffleDeckLink: string = "/shuffle/"
-const decksCount: number = 6;
-
-export const endpoints: TEndpoints = {
-    mainLink:mainLink,
-    newDeckShuffledLink: newDeckShuffledLink + decksCount,
-    drawOneCardLink: drawOneCardLink,
-    drawTwoCardsLink: drawTwoCardsLink,
-    drawFourCardsLink: drawFourCardsLink,
-    drawXCards: drawXCards,
-    reshuffleDeckLink: reshuffleDeckLink,
-    decksCount: decksCount
-}
+export const endpoints = {
+  mainLink: mainLink,
+  newDeckShuffledLink: newDeckShuffledLink + decksCount,
+  drawOneCardLink: drawOneCardLink,
+  drawTwoCardsLink: drawTwoCardsLink,
+  drawFourCardsLink: drawFourCardsLink,
+  drawXCards: drawXCards,
+  reshuffleDeckLink: reshuffleDeckLink,
+  decksCount: decksCount,
+};

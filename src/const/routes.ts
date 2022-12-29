@@ -1,9 +1,7 @@
-import { TRoutes } from "../types/global"
+const about = "/about";
+const game = "/game";
 
-const about = "/about"
-const game = "/game"
-
-export const routes: TRoutes = {
-    game: game,
-    about: about,
-}
+export const routes = {
+  game: game,
+  about: about,
+};

@@ -1,14 +1,14 @@
-import React from 'react'
+import React from "react";
 
-import {MenuButton} from '../partials/general/Button'
+import { MenuButton } from "../components/general/Button";
 
-import { routes } from '../const/routes'
+import { routes } from "../const/routes";
 
 export default function HomePage() {
   return (
     <>
-        <MenuButton to={routes.game}>Game</MenuButton>
-        <MenuButton to={routes.about}>About</MenuButton>
+      <MenuButton to={routes.game}>Game</MenuButton>
+      <MenuButton to={routes.about}>About</MenuButton>
     </>
-  )
+  );
 }

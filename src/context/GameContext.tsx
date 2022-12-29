@@ -1,13 +1,13 @@
-import React, {useCallback, useEffect, useState, createContext} from 'react'
+import React, { useCallback, useEffect, useState, createContext } from "react";
 
-import { DrawedCard } from '../types/global'
-import { cardService } from '../services/CardService'
-import { endpoints } from '../const/api'
+import { DrawedCard } from "../types/global";
+import { cardService } from "../services/CardService";
+import { endpoints } from "../const/api";
 
-import { TGameContext, RoundStatus } from '../types/global'
+import { TGameContext } from "../types/global";
 
 export const GameContext = createContext<TGameContext>({
-  deckId: 'dxx',
+  deckId: "",
   setDeckId: () => {},
   playerCards: [],
   croupierCards: [],
@@ -16,48 +16,66 @@ export const GameContext = createContext<TGameContext>({
   drawOnGameStart: () => {},
   drawOneCard: () => {},
   passRound: () => {},
-})
+  shuffleDeck: () => {},
+});
 
-
-export function GameContextProvider({children}) {
-
-  const [deckId, setDeckId] = useState('');
+export function GameContextProvider({ children }) {
+  const [deckId, setDeckId] = useState("");
 
   const [playerCards, setPlayerCards] = useState<DrawedCard[]>([]);
   const [croupierCards, setCroupierCards] = useState<DrawedCard[]>([]);
-  const [isCroupierCardReversed, setIsCroupierCardReversed] = useState<boolean>(false);
+  const [isCroupierCardReversed, setIsCroupierCardReversed] =
+    useState<boolean>(false);
 
-  const [roundEnded, setRoundEnded] = useState<RoundStatus>({
+  const [roundEnded, setRoundEnded] = useState({
     player: false,
     computer: false,
   });
 
-  const drawOnGameStart = useCallback(() => {    
-
-    cardService.drawCards(deckId, endpoints.drawFourCardsLink).then( (result: DrawedCard[]) => {
-      setPlayerCards(result.slice(0,2));
-      setCroupierCards(result.slice(2,4));
-    })
+  const drawOnGameStart = useCallback(() => {
+    cardService
+      .drawCards(deckId, endpoints.drawFourCardsLink)
+      .then((result: DrawedCard[]) => {
+        setPlayerCards(result.slice(0, 2));
+        setCroupierCards(result.slice(2, 4));
+      });
   }, [deckId]);
 
-  const drawOneCard = useCallback((player:boolean = true) => {    
-    cardService.drawCards(deckId, endpoints.drawOneCardLink).then( (result: DrawedCard[]) => {
-      player ? setPlayerCards((prevCards) => {return [...prevCards, ...result]}) : setCroupierCards((prevCards) => {return [...prevCards, ...result]});
-    })
-  }, [deckId]);
+  const drawOneCard = useCallback(
+    (player = true) => {
+      cardService
+        .drawCards(deckId, endpoints.drawOneCardLink)
+        .then((result) => {
+          if (player) {
+            setPlayerCards((prevCards) => {
+              return [...prevCards, ...result];
+            });
+          } else {
+            setCroupierCards((prevCards) => {
+              return [...prevCards, ...result];
+            });
+          }
+        });
+    },
+    [deckId]
+  );
 
   const passRound = useCallback(() => {
     setIsCroupierCardReversed(true);
-    setRoundEnded((prevRoundStatus: RoundStatus) => {
+    setRoundEnded((prevRoundStatus) => {
       return { ...prevRoundStatus, player: true };
     });
   }, []);
 
-  useEffect(() => {    
-    if( deckId !== ''){      
+  const shuffleDeck = useCallback(() => {
+    cardService.shuffleDeck(deckId);
+  }, [deckId]);
+
+  useEffect(() => {
+    if (deckId !== "") {
       drawOnGameStart();
     }
-  }, [deckId, drawOnGameStart])
+  }, [deckId, drawOnGameStart]);
 
   const gameContextValue = {
     deckId,
@@ -68,11 +86,13 @@ export function GameContextProvider({children}) {
     setIsCroupierCardReversed,
     drawOnGameStart,
     drawOneCard,
-    passRound
-  }
+    passRound,
+    shuffleDeck,
+  };
 
   return (
-    <GameContext.Provider value={gameContextValue} >{children}</GameContext.Provider>
-  )
+    <GameContext.Provider value={gameContextValue}>
+      {children}
+    </GameContext.Provider>
+  );
 }
-
