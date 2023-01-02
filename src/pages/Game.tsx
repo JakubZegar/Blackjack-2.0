@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import GameInterface from "../components/game/GameInterface";
 
@@ -10,11 +10,11 @@ export default function Game() {
 
   useEffect(() => {
     cardService.createDeck().then((deckId: string) => {
-      if (Boolean(deckId)) {
+      if (deckId) {
         setDeckId(deckId);
       }
     });
   }, [setDeckId]);
 
-  return Boolean(deckId) ? <GameInterface /> : null;
+  return deckId ? <GameInterface /> : null;
 }
