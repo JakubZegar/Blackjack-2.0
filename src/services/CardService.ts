@@ -12,7 +12,12 @@ const drawCards = async (deckId: string, cardNumber: string) => {
   const result: AxiosResponse<DrawCardResponse> = await axios.get<DrawCardResponse>(
     endpoints.mainLink + deckId + cardNumber
   );
-  return result.data.cards;
+  return result.data.cards.map((card) => {
+    return {
+      value: card.value,
+      image: card.image,
+    };
+  });
 };
 
 const shuffleDeck = async (deckId: string) => {

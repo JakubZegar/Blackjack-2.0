@@ -12,7 +12,7 @@ enum CardNames {
   KING = "KING",
 }
 
-const getPointsFromCard = (card: DrawedCard) => {
+export const getPointsFromCard = (card: DrawedCard) => {
   let [points, alternativePoints] = [0, 0];
 
   if (card.value === CardNames.ACE) {
@@ -22,8 +22,13 @@ const getPointsFromCard = (card: DrawedCard) => {
     points = 10;
     alternativePoints = 10;
   } else {
-    points = parseInt(card.value);
-    alternativePoints = parseInt(card.value);
+    if (isNaN(parseInt(card.value))) {
+      points = 0;
+      alternativePoints = 0;
+    } else {
+      points = parseInt(card.value);
+      alternativePoints = parseInt(card.value);
+    }
   }
 
   return {

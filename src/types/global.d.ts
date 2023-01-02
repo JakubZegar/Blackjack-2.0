@@ -20,11 +20,8 @@ export type DrawCardResponse = {
 };
 
 export type DrawedCard = {
-  code: string;
   image: string;
-  images: CardImages;
   value: string;
-  suit: string;
 };
 
 type CardImages = {
