@@ -17,7 +17,7 @@ export default function Hand({ player = false }) {
     cards = croupierCards;
   }
 
-  const reversedCards: JSX.Element[] = cards.map((card, index) => {
+  const reversedCards = cards.map((card, index) => {
     return <StyledCard key={index} image={card.image} />;
   });
 
