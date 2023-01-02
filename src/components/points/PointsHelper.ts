@@ -44,8 +44,14 @@ const getPointsOutcomes = (cards: DrawedCard[], isCroupierCardReversed: boolean,
   if (isCroupierCardReversed === true || player === true) {
     cards.forEach((card) => {
       cardValues = getPointsFromCard(card);
-      sumPoints += cardValues.main;
-      sumAlternativePoints += cardValues.alternative;
+
+      if (card.value === "ACE" && sumPoints !== sumAlternativePoints) {
+        sumPoints += cardValues.main;
+        sumAlternativePoints += cardValues.main;
+      } else {
+        sumPoints += cardValues.main;
+        sumAlternativePoints += cardValues.alternative;
+      }
     });
   } else {
     cardValues = getPointsFromCard(cards[0]);
@@ -53,7 +59,7 @@ const getPointsOutcomes = (cards: DrawedCard[], isCroupierCardReversed: boolean,
     sumAlternativePoints += cardValues.alternative;
   }
 
-  return [sumPoints, sumAlternativePoints];
+  return sumAlternativePoints > 0 && sumAlternativePoints <= 21 ? sumAlternativePoints : sumPoints;
 };
 
 const pointsHelpers = {

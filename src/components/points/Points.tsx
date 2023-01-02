@@ -22,17 +22,9 @@ function Points({ player = false }) {
 
   useEffect(() => {
     if (cards.length) {
-      let [sumPoints, sumAlternativePoints] = pointsHelpers.getPointsOutcomes(cards, player, isCroupierCardReversed);
+      let sumPoints = pointsHelpers.getPointsOutcomes(cards, player, isCroupierCardReversed);
 
-      if (sumAlternativePoints > 0 && sumAlternativePoints <= 21) {
-        setPoints(() => {
-          return sumAlternativePoints;
-        });
-      } else if (sumPoints > 0) {
-        setPoints(() => {
-          return sumPoints;
-        });
-      }
+      setPoints(sumPoints);
     }
   }, [cards, isCroupierCardReversed, player]);
 
