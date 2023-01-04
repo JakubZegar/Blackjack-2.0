@@ -39,5 +39,15 @@ export type TGameContext = {
   drawOnGameStart: () => void;
   drawOneCard: (player?) => void;
   passRound: () => void;
+  setRoundEnded: (newRoundStatus: SetStateAction<{ player: boolean; croupier: boolean }>) => void;
   shuffleDeck: () => void;
+  message: string;
+  setMessage: (message: SetStateAction<string>) => void;
+  roundEnded: {
+    player: boolean;
+    croupier: boolean;
+  };
+  resetRound: () => void;
+  setPoints: (points: SetStateAction<{ playerPoints: number; croupierPoints: number }>) => void;
+  points: { playerPoints: number; croupierPoints: number };
 };

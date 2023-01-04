@@ -31,7 +31,7 @@ export const MenuButton = styled(Link)`
     background-color: ${colors.hover};
   }
 `;
-export const Button = styled.div<{ smallMargin?: boolean; isEnabled: boolean }>`
+export const Button = styled.button<{ smallMargin?: boolean; disabled: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -57,6 +57,6 @@ export const Button = styled.div<{ smallMargin?: boolean; isEnabled: boolean }>`
     transition: all 0.2s ease-in-out;
     scale: 1.1;
 
-    background: ${({ isEnabled }) => (isEnabled ? colors.hoverDark : colors.secondary)};
+    background: ${({ disabled }) => (disabled ? colors.secondary : colors.hoverDark)};
   }
 `;

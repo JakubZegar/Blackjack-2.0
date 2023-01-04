@@ -221,6 +221,25 @@ test("should king and two aces return 12 ", () => {
   expect(pointsHelpers.getPointsOutcomes(cards, player, croupierCardReversed)).toBe(12);
 });
 
+test("should ace, king and ace return 12 ", () => {
+  const cards = [
+    {
+      image: "https://deckofcardsapi.com/static/img/AH.png",
+      value: "ACE",
+    },
+    {
+      image: "https://deckofcardsapi.com/static/img/KH.png",
+      value: "KING",
+    },
+    {
+      image: "https://deckofcardsapi.com/static/img/AH.png",
+      value: "ACE",
+    },
+  ];
+
+  expect(pointsHelpers.getPointsOutcomes(cards, player, croupierCardReversed)).toBe(12);
+});
+
 test("should count only first card when croupier card is not reversed, but somehow corupier has more than two cards ", () => {
   const cards = [
     {

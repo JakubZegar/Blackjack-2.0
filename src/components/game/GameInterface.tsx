@@ -7,9 +7,10 @@ import Points from "../points/Points";
 import Hand from "../cards/Hand";
 
 import useGameContext from "../../hooks/useGameContext";
+import { MessageWrapper } from "../points/PointsElements";
 
 export default function GameInterface() {
-  const { playerCards } = useGameContext();
+  const { playerCards, message } = useGameContext();
 
   if (!playerCards.length) {
     return <Preloader />;
@@ -26,6 +27,8 @@ export default function GameInterface() {
         </PlayerSection>
 
         <Actions />
+
+        <MessageWrapper>{message}</MessageWrapper>
 
         <PlayerSection>
           <Points player={true} />
