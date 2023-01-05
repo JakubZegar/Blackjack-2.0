@@ -22,7 +22,7 @@ export const getPointsFromCard = (card: DrawedCard) => {
     points = 10;
     alternativePoints = 10;
   } else {
-    if (isNaN(parseInt(card.value))) {
+    if (isNaN(parseInt(card.value)) || parseInt(card.value) < 2) {
       points = 0;
       alternativePoints = 0;
     } else {
