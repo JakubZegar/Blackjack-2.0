@@ -69,10 +69,6 @@ export function GameContextProvider({ children, deckId }) {
     [deckId]
   );
 
-  const shuffleDeck = useCallback(() => {
-    cardService.shuffleDeck(deckId);
-  }, [deckId]);
-
   const resetRound = useCallback(() => {
     setRoundEnded({
       player: false,
@@ -116,7 +112,6 @@ export function GameContextProvider({ children, deckId }) {
     drawOnGameStart,
     drawOneCard,
     setRoundEnded,
-    shuffleDeck,
     message,
     setMessage,
     roundEnded,
