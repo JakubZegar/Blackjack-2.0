@@ -10,17 +10,11 @@ import gameContextHelpers from "./GameContextHelper";
 import { winner } from "../const/gameWinner";
 
 export const GameContext = createContext<TGameContext>({
-  deckId: "",
-  setDeckId: () => {},
   playerCards: [],
   croupierCards: [],
-  isCroupierCardReversed: false,
-  setIsCroupierCardReversed: () => {},
   drawOnGameStart: () => {},
   drawOneCard: () => {},
-  passRound: () => {},
   setRoundEnded: () => {},
-  shuffleDeck: () => {},
   message: "",
   setMessage: () => {},
   roundEnded: {
@@ -35,12 +29,10 @@ export const GameContext = createContext<TGameContext>({
   },
 });
 
-export function GameContextProvider({ children }) {
-  const [deckId, setDeckId] = useState("");
+export function GameContextProvider({ children, deckId }) {
 
   const [playerCards, setPlayerCards] = useState<DrawedCard[]>([]);
   const [croupierCards, setCroupierCards] = useState<DrawedCard[]>([]);
-  const [isCroupierCardReversed, setIsCroupierCardReversed] = useState(false);
   const [points, setPoints] = useState({
     playerPoints: 0,
     croupierPoints: 0,
@@ -77,13 +69,6 @@ export function GameContextProvider({ children }) {
     [deckId]
   );
 
-  const passRound = useCallback(() => {
-    setIsCroupierCardReversed(true);
-    setRoundEnded((prevRoundStatus) => {
-      return { ...prevRoundStatus, player: true };
-    });
-  }, []);
-
   const shuffleDeck = useCallback(() => {
     cardService.shuffleDeck(deckId);
   }, [deckId]);
@@ -94,7 +79,6 @@ export function GameContextProvider({ children }) {
       croupier: false,
     });
     drawOnGameStart();
-    setIsCroupierCardReversed(false);
     setMessage("Your turn");
   }, [drawOnGameStart]);
 
@@ -105,15 +89,7 @@ export function GameContextProvider({ children }) {
   }, [deckId, drawOnGameStart]);
 
   useEffect(() => {
-    if (roundEnded.player === true && roundEnded.croupier === false && points.croupierPoints <= 16) {
-      setTimeout(() => {
-        drawOneCard(false);
-      }, 1000);
-    }
-  }, [points.croupierPoints]);
-
-  useEffect(() => {
-    if (roundEnded.croupier === true) {
+    if (roundEnded.croupier) {      
       switch (gameContextHelpers.findWhoWonRound(points.playerPoints, points.croupierPoints)) {
         case winner.PLAYER: {
           setMessage("You win");
@@ -132,18 +108,13 @@ export function GameContextProvider({ children }) {
         }
       }
     }
-  }, [roundEnded.croupier]);
+  }, [points.croupierPoints, points.playerPoints, roundEnded.croupier]);
 
   const gameContextValue = {
-    deckId,
-    setDeckId,
     playerCards,
     croupierCards,
-    isCroupierCardReversed,
-    setIsCroupierCardReversed,
     drawOnGameStart,
     drawOneCard,
-    passRound,
     setRoundEnded,
     shuffleDeck,
     message,

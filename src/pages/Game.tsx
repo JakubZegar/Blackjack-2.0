@@ -3,10 +3,11 @@ import React, { useEffect } from "react";
 import GameInterface from "../components/game/GameInterface";
 
 import { cardService } from "../services/CardService";
-import useGameContext from "../hooks/useGameContext";
+import { GameContextProvider } from "../context/GameContext";
+import useDeckContext from "../hooks/useDeckContext";
 
 export default function Game() {
-  const { deckId, setDeckId } = useGameContext();
+  const { deckId, setDeckId } = useDeckContext();
 
   useEffect(() => {
     cardService.createDeck().then((deckId: string) => {
@@ -16,5 +17,5 @@ export default function Game() {
     });
   }, [setDeckId]);
 
-  return deckId ? <GameInterface /> : null;
+  return deckId ? <GameContextProvider deckId={deckId}><GameInterface /></GameContextProvider> : null;
 }

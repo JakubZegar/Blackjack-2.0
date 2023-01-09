@@ -7,21 +7,20 @@ import Leaderboard from "./pages/Leaderboard";
 import { HomePageContainer } from "./components/home/HomePageElements";
 
 import "./App.css";
-import { GameContextProvider } from "./context/GameContext";
+import { DeckContextProvider } from "./context/DeckContext";
 
 function App() {
   return (
-    <GameContextProvider>
+
       <HomePageContainer>
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<HomePage />} />
-            <Route path='/game' element={<Game />} />
+            <Route path='/game' element={<DeckContextProvider><Game /></DeckContextProvider>} />
             <Route path='/leaderboard' element={<Leaderboard />} />
           </Routes>
         </BrowserRouter>
       </HomePageContainer>
-    </GameContextProvider>
   );
 }
 

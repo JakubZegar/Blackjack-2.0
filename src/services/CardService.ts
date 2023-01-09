@@ -24,8 +24,6 @@ const shuffleDeck = async (deckId: string) => {
   const result: AxiosResponse<DrawCardResponse> = await axios.get<DrawCardResponse>(
     endpoints.mainLink + deckId + endpoints.reshuffleDeckLink
   );
-  console.log(result);
-
   return result;
 };
 

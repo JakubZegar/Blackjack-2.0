@@ -6,7 +6,7 @@ import { Button } from "../general/Button";
 import useGameContext from "../../hooks/useGameContext";
 
 export default function Actions() {
-  const { drawOneCard, passRound, roundEnded, resetRound } = useGameContext();
+  const { drawOneCard, setRoundEnded, roundEnded, resetRound } = useGameContext();
 
   return (
     <ActionContainer>
@@ -14,7 +14,7 @@ export default function Actions() {
         Draw
       </Button>
       {/* <Button disabled={playerCards.length !== 2}>Double</Button> */}
-      <Button disabled={roundEnded.player} onClick={passRound}>
+      <Button disabled={roundEnded.player} onClick={() => setRoundEnded({player:true, croupier: false})}>
         Pass
       </Button>
       <Button disabled={false} onClick={resetRound}>

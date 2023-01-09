@@ -1,13 +1,14 @@
 import { winner } from "../const/gameWinner";
+import { rules } from "../const/rules";
 
 const findWhoWonRound = (playerPoints: number, croupierPoints: number) => {
-  if (playerPoints > 21) {
+  if (playerPoints > rules.BLACKJACK) {
     return winner.CROUPIER;
   } else if (playerPoints > croupierPoints) {
     return winner.PLAYER;
   } else if (playerPoints === croupierPoints) {
     return winner.DRAW;
-  } else if (croupierPoints > 21) {
+  } else if (croupierPoints > rules.BLACKJACK) {
     return winner.PLAYER;
   } else {
     return winner.CROUPIER;
