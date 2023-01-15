@@ -6,7 +6,7 @@ import useGameContext from "../../hooks/useGameContext";
 import SingleRoundHistory from "./SingleRoundHistory";
 
 export default function RoundHistory() {
-  const { prevoiusRounds } = useGameContext();
+  const { prevoiusRounds, roundWinners } = useGameContext();
 
   if (prevoiusRounds.length === 0) {
     return null;
@@ -18,11 +18,10 @@ export default function RoundHistory() {
         return (
           <>
             <RoundStatusLabel>
-              Round {roundIndex + 1} - Winner: {prevRound.winner} ({prevRound.amountWon} points)
+              Round {roundIndex + 1} - Winner: {roundWinners[roundIndex]}
             </RoundStatusLabel>
 
             <SingleRoundHistory roundInfo={prevRound} roundIndex={roundIndex}></SingleRoundHistory>
-            <SingleRoundHistory roundInfo={prevRound} roundIndex={roundIndex} player={false}></SingleRoundHistory>
           </>
         );
       })}

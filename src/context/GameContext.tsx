@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, createContext } from "react";
+import React, { useCallback, useEffect, useState, createContext, useMemo } from "react";
 
 import { DrawedCard, EndedRoundStatus } from "../types/global";
 import { cardService } from "../services/CardService";
@@ -28,6 +28,7 @@ export const GameContext = createContext<TGameContext>({
     croupierPoints: 0,
   },
   prevoiusRounds: [],
+  roundWinners: [],
 });
 
 export function GameContextProvider({ children, deckId }) {
@@ -44,6 +45,8 @@ export function GameContextProvider({ children, deckId }) {
     player: false,
     croupier: false,
   });
+
+  const roundWinners: Array<winner.PLAYER | winner.CROUPIER | winner.DRAW> = useMemo(() => [], []);
 
   const [message, setMessage] = useState("Your turn");
 
@@ -72,13 +75,23 @@ export function GameContextProvider({ children, deckId }) {
   );
 
   const resetRound = useCallback(() => {
+    setPreviousRounds((prevRounds) => {
+      return [
+        ...prevRounds,
+        {
+          playerCards: playerCards,
+          croupierCards: croupierCards,
+        },
+      ];
+    });
+
     setRoundEnded({
       player: false,
       croupier: false,
     });
     drawOnGameStart();
     setMessage("Your turn");
-  }, [drawOnGameStart]);
+  }, [drawOnGameStart, playerCards, croupierCards]);
 
   useEffect(() => {
     if (deckId !== "") {
@@ -113,21 +126,10 @@ export function GameContextProvider({ children, deckId }) {
           break;
         }
       }
-
-      setPreviousRounds((prevRounds) => {
-        return [
-          ...prevRounds,
-          {
-            playerCards: playerCards,
-            croupierCards: croupierCards,
-            winner: currentRoundWinner,
-            amountWon: 0,
-          },
-        ];
-      });
+      roundWinners.push(currentRoundWinner);
       setMessage(newMessage);
     }
-  }, [points.croupierPoints, points.playerPoints, roundEnded.croupier]);
+  }, [points.croupierPoints, points.playerPoints, roundEnded.croupier, roundWinners]);
 
   const gameContextValue = {
     playerCards,
@@ -142,6 +144,7 @@ export function GameContextProvider({ children, deckId }) {
     setPoints,
     points,
     prevoiusRounds,
+    roundWinners,
   };
 
   return <GameContext.Provider value={gameContextValue}>{children}</GameContext.Provider>;

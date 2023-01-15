@@ -45,6 +45,7 @@ export type TGameContext = {
   setPoints: (points: SetStateAction<{ playerPoints: number; croupierPoints: number }>) => void;
   points: { playerPoints: number; croupierPoints: number };
   prevoiusRounds: EndedRoundStatus[];
+  roundWinners: Array<winner.PLAYER | winner.CROUPIER | winner.DRAW>;
 };
 
 export type TDeckContext = {
@@ -56,6 +57,4 @@ export type TDeckContext = {
 export type EndedRoundStatus = {
   playerCards: DrawedCard[];
   croupierCards: DrawedCard[];
-  winner: winner.PLAYER | winner.CROUPIER | winner.DRAW;
-  amountWon: number;
 };
