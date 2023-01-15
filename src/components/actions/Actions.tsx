@@ -14,10 +14,10 @@ export default function Actions() {
         Draw
       </Button>
       {/* <Button disabled={playerCards.length !== 2}>Double</Button> */}
-      <Button disabled={roundEnded.player} onClick={() => setRoundEnded({player:true, croupier: false})}>
+      <Button disabled={roundEnded.player} onClick={() => setRoundEnded({ player: true, croupier: false })}>
         Pass
       </Button>
-      <Button disabled={false} onClick={resetRound}>
+      <Button disabled={!roundEnded.player} onClick={resetRound}>
         Reset
       </Button>
     </ActionContainer>
