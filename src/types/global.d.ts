@@ -44,11 +44,18 @@ export type TGameContext = {
   resetRound: () => void;
   setPoints: (points: SetStateAction<{ playerPoints: number; croupierPoints: number }>) => void;
   points: { playerPoints: number; croupierPoints: number };
+  prevoiusRounds: EndedRoundStatus[];
 };
-
 
 export type TDeckContext = {
   deckId: string;
   setDeckId: Dispatch<SetStateAction<string>>;
   shuffleDeck: () => void;
-}
+};
+
+export type EndedRoundStatus = {
+  playerCards: DrawedCard[];
+  croupierCards: DrawedCard[];
+  winner: winner.PLAYER | winner.CROUPIER | winner.DRAW;
+  amountWon: number;
+};

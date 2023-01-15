@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState, createContext } from "react";
 
-import { DrawedCard } from "../types/global";
+import { DrawedCard, EndedRoundStatus } from "../types/global";
 import { cardService } from "../services/CardService";
 import { endpoints } from "../const/api";
 
@@ -27,16 +27,18 @@ export const GameContext = createContext<TGameContext>({
     playerPoints: 0,
     croupierPoints: 0,
   },
+  prevoiusRounds: [],
 });
 
 export function GameContextProvider({ children, deckId }) {
-
   const [playerCards, setPlayerCards] = useState<DrawedCard[]>([]);
   const [croupierCards, setCroupierCards] = useState<DrawedCard[]>([]);
   const [points, setPoints] = useState({
     playerPoints: 0,
     croupierPoints: 0,
   });
+
+  const [prevoiusRounds, setPreviousRounds] = useState<EndedRoundStatus[]>([]);
 
   const [roundEnded, setRoundEnded] = useState({
     player: false,
@@ -85,24 +87,45 @@ export function GameContextProvider({ children, deckId }) {
   }, [deckId, drawOnGameStart]);
 
   useEffect(() => {
-    if (roundEnded.croupier) {      
+    if (roundEnded.croupier) {
+      let newMessage: string;
+      let currentRoundWinner: winner.PLAYER | winner.CROUPIER | winner.DRAW;
+
       switch (gameContextHelpers.findWhoWonRound(points.playerPoints, points.croupierPoints)) {
         case winner.PLAYER: {
-          setMessage("You win");
+          newMessage = "You win";
+          currentRoundWinner = winner.PLAYER;
           break;
         }
         case winner.CROUPIER: {
-          setMessage("You lost");
+          newMessage = "You lost";
+          currentRoundWinner = winner.CROUPIER;
           break;
         }
         case winner.DRAW: {
-          setMessage("Draw");
+          newMessage = "Draw";
+          currentRoundWinner = winner.DRAW;
           break;
         }
         default: {
+          newMessage = "Winner not recoginzed";
+          currentRoundWinner = winner.DRAW;
           break;
         }
       }
+
+      setPreviousRounds((prevRounds) => {
+        return [
+          ...prevRounds,
+          {
+            playerCards: playerCards,
+            croupierCards: croupierCards,
+            winner: currentRoundWinner,
+            amountWon: 0,
+          },
+        ];
+      });
+      setMessage(newMessage);
     }
   }, [points.croupierPoints, points.playerPoints, roundEnded.croupier]);
 
@@ -118,6 +141,7 @@ export function GameContextProvider({ children, deckId }) {
     resetRound,
     setPoints,
     points,
+    prevoiusRounds,
   };
 
   return <GameContext.Provider value={gameContextValue}>{children}</GameContext.Provider>;

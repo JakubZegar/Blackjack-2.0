@@ -1,6 +1,7 @@
 import React from "react";
 
 import Actions from "../actions/Actions";
+import RoundHistory from "../roundHistory/RoundHistory";
 import { GameContainer, MiddleContainer, PlayerSection, SideContainer } from "./GameElements";
 import { Preloader } from "../general/Preloader";
 import PlayerPoints from "../points/PlayerPoints";
@@ -20,7 +21,7 @@ export default function GameInterface() {
 
   return (
     <GameContainer>
-      <SideContainer></SideContainer>
+      <SideContainer>&nbsp;</SideContainer>
 
       <MiddleContainer>
         <PlayerSection>
@@ -33,12 +34,14 @@ export default function GameInterface() {
         <MessageWrapper>{message}</MessageWrapper>
 
         <PlayerSection>
-          <PlayerPoints/>
+          <PlayerPoints />
           <Hand player={true} />
         </PlayerSection>
       </MiddleContainer>
 
-      <SideContainer></SideContainer>
+      <SideContainer>
+        <RoundHistory></RoundHistory>
+      </SideContainer>
     </GameContainer>
   );
 }
