@@ -46,7 +46,7 @@ export function GameContextProvider({ children, deckId }) {
     croupier: false,
   });
 
-  const roundWinners: Array<winner.PLAYER | winner.CROUPIER | winner.DRAW> = useMemo(() => [], []);
+  const roundWinners: winner[] = useMemo(() => [], []);
 
   const [message, setMessage] = useState("Your turn");
 
@@ -102,7 +102,7 @@ export function GameContextProvider({ children, deckId }) {
   useEffect(() => {
     if (roundEnded.croupier) {
       let newMessage: string;
-      let currentRoundWinner: winner.PLAYER | winner.CROUPIER | winner.DRAW;
+      let currentRoundWinner: winner;
 
       switch (gameContextHelpers.findWhoWonRound(points.playerPoints, points.croupierPoints)) {
         case winner.PLAYER: {
