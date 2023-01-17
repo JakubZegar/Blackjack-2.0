@@ -30,14 +30,25 @@ type CardImages = {
 };
 
 export type TGameContext = {
-  deckId: string;
-  setDeckId: Dispatch<SetStateAction<string>>;
   playerCards: DrawedCard[];
   croupierCards: DrawedCard[];
-  isCroupierCardReversed: boolean;
-  setIsCroupierCardReversed: Dispatch<SetStateAction<boolean>>;
   drawOnGameStart: () => void;
   drawOneCard: (player?) => void;
-  passRound: () => void;
-  shuffleDeck: () => void;
+  setRoundEnded: (newRoundStatus: SetStateAction<{ player: boolean; croupier: boolean }>) => void;
+  message: string;
+  setMessage: (message: SetStateAction<string>) => void;
+  roundEnded: {
+    player: boolean;
+    croupier: boolean;
+  };
+  resetRound: () => void;
+  setPoints: (points: SetStateAction<{ playerPoints: number; croupierPoints: number }>) => void;
+  points: { playerPoints: number; croupierPoints: number };
 };
+
+
+export type TDeckContext = {
+  deckId: string;
+  setDeckId: Dispatch<SetStateAction<string>>;
+  shuffleDeck: () => void;
+}

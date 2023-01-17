@@ -20,3 +20,11 @@ export const PointsWrapper = styled.div`
   font-size: 15px;
   text-align: center;
 `;
+
+export const MessageWrapper = styled.h2`
+  padding: 8px;
+
+  color: ${colors.text};
+  font-size: 40ointspx;
+  font-weight: bold;
+`;

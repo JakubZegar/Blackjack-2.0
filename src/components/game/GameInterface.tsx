@@ -3,13 +3,16 @@ import React from "react";
 import Actions from "../actions/Actions";
 import { GameContainer, MiddleContainer, PlayerSection, SideContainer } from "./GameElements";
 import { Preloader } from "../general/Preloader";
-import Points from "../points/Points";
+import PlayerPoints from "../points/PlayerPoints";
+import CroupierPoints from "../points/CroupierPoints";
+
 import Hand from "../cards/Hand";
 
 import useGameContext from "../../hooks/useGameContext";
+import { MessageWrapper } from "../points/PointsElements";
 
 export default function GameInterface() {
-  const { playerCards } = useGameContext();
+  const { playerCards, message } = useGameContext();
 
   if (!playerCards.length) {
     return <Preloader />;
@@ -22,13 +25,15 @@ export default function GameInterface() {
       <MiddleContainer>
         <PlayerSection>
           <Hand />
-          <Points />
+          <CroupierPoints />
         </PlayerSection>
 
         <Actions />
 
+        <MessageWrapper>{message}</MessageWrapper>
+
         <PlayerSection>
-          <Points player={true} />
+          <PlayerPoints/>
           <Hand player={true} />
         </PlayerSection>
       </MiddleContainer>

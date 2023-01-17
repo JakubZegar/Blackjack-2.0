@@ -5,31 +5,45 @@ import { cardService } from "../services/CardService";
 import { endpoints } from "../const/api";
 
 import { TGameContext } from "../types/global";
+import gameContextHelpers from "./GameContextHelper";
+
+import { winner } from "../const/gameWinner";
 
 export const GameContext = createContext<TGameContext>({
-  deckId: "",
-  setDeckId: () => {},
   playerCards: [],
   croupierCards: [],
-  isCroupierCardReversed: false,
-  setIsCroupierCardReversed: () => {},
   drawOnGameStart: () => {},
   drawOneCard: () => {},
-  passRound: () => {},
-  shuffleDeck: () => {},
+  setRoundEnded: () => {},
+  message: "",
+  setMessage: () => {},
+  roundEnded: {
+    player: false,
+    croupier: false,
+  },
+  resetRound: () => {},
+  setPoints: () => {},
+  points: {
+    playerPoints: 0,
+    croupierPoints: 0,
+  },
 });
 
-export function GameContextProvider({ children }) {
-  const [deckId, setDeckId] = useState("");
+export function GameContextProvider({ children, deckId }) {
 
   const [playerCards, setPlayerCards] = useState<DrawedCard[]>([]);
   const [croupierCards, setCroupierCards] = useState<DrawedCard[]>([]);
-  const [isCroupierCardReversed, setIsCroupierCardReversed] = useState<boolean>(false);
+  const [points, setPoints] = useState({
+    playerPoints: 0,
+    croupierPoints: 0,
+  });
 
   const [roundEnded, setRoundEnded] = useState({
     player: false,
-    computer: false,
+    croupier: false,
   });
+
+  const [message, setMessage] = useState("Your turn");
 
   const drawOnGameStart = useCallback(() => {
     cardService.drawCards(deckId, endpoints.drawFourCardsLink).then((result: DrawedCard[]) => {
@@ -55,16 +69,14 @@ export function GameContextProvider({ children }) {
     [deckId]
   );
 
-  const passRound = useCallback(() => {
-    setIsCroupierCardReversed(true);
-    setRoundEnded((prevRoundStatus) => {
-      return { ...prevRoundStatus, player: true };
+  const resetRound = useCallback(() => {
+    setRoundEnded({
+      player: false,
+      croupier: false,
     });
-  }, []);
-
-  const shuffleDeck = useCallback(() => {
-    cardService.shuffleDeck(deckId);
-  }, [deckId]);
+    drawOnGameStart();
+    setMessage("Your turn");
+  }, [drawOnGameStart]);
 
   useEffect(() => {
     if (deckId !== "") {
@@ -72,17 +84,40 @@ export function GameContextProvider({ children }) {
     }
   }, [deckId, drawOnGameStart]);
 
+  useEffect(() => {
+    if (roundEnded.croupier) {      
+      switch (gameContextHelpers.findWhoWonRound(points.playerPoints, points.croupierPoints)) {
+        case winner.PLAYER: {
+          setMessage("You win");
+          break;
+        }
+        case winner.CROUPIER: {
+          setMessage("You lost");
+          break;
+        }
+        case winner.DRAW: {
+          setMessage("Draw");
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    }
+  }, [points.croupierPoints, points.playerPoints, roundEnded.croupier]);
+
   const gameContextValue = {
-    deckId,
-    setDeckId,
     playerCards,
     croupierCards,
-    isCroupierCardReversed,
-    setIsCroupierCardReversed,
     drawOnGameStart,
     drawOneCard,
-    passRound,
-    shuffleDeck,
+    setRoundEnded,
+    message,
+    setMessage,
+    roundEnded,
+    resetRound,
+    setPoints,
+    points,
   };
 
   return <GameContext.Provider value={gameContextValue}>{children}</GameContext.Provider>;

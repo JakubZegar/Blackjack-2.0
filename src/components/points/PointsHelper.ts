@@ -1,3 +1,4 @@
+import { rules } from "../../const/rules";
 import { DrawedCard } from "../../types/global";
 
 type TCountPoints = {
@@ -37,11 +38,11 @@ export const getPointsFromCard = (card: DrawedCard) => {
   };
 };
 
-const getPointsOutcomes = (cards: DrawedCard[], isCroupierCardReversed: boolean, player: boolean) => {
+const getPointsOutcomes = (cards: DrawedCard[], player: boolean, isCroupierCardReversed = false) => {
   let cardValues: TCountPoints;
   let [sumPoints, sumAlternativePoints] = [0, 0];
 
-  if (isCroupierCardReversed === true || player === true) {
+  if (isCroupierCardReversed || player ) {
     cards.forEach((card) => {
       cardValues = getPointsFromCard(card);
 
@@ -59,7 +60,7 @@ const getPointsOutcomes = (cards: DrawedCard[], isCroupierCardReversed: boolean,
     sumAlternativePoints += cardValues.alternative;
   }
 
-  return sumAlternativePoints > 0 && sumAlternativePoints <= 21 ? sumAlternativePoints : sumPoints;
+  return sumAlternativePoints > 0 && sumAlternativePoints <= rules.BLACKJACK ? sumAlternativePoints : sumPoints;
 };
 
 const pointsHelpers = {
