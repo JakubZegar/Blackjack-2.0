@@ -4,26 +4,25 @@ import { SmallCardContainer, HisotryCardsLabel, SmallCard } from "./RoundHisotry
 
 type Props = {
   roundInfo: EndedRoundStatus;
-  roundIndex: number;
 };
 
-export default function SingleRoundHistory({ roundInfo, roundIndex }: Props) {
-  const roundPlayerCards = roundInfo.playerCards.map((card, cardIndex) => {
-    return <SmallCard key={cardIndex} src={card.image}></SmallCard>;
+export default function SingleRoundHistory({ roundInfo }: Props) {
+  const roundPlayerCards = roundInfo.playerCards.map((card) => {
+    return <SmallCard key={card.cardIndex} src={card.image}></SmallCard>;
   });
 
-  const roundcroupierCards = roundInfo.croupierCards.map((card, cardIndex) => {
-    return <SmallCard key={cardIndex} src={card.image}></SmallCard>;
+  const roundcroupierCards = roundInfo.croupierCards.map((card) => {
+    return <SmallCard key={card.cardIndex} src={card.image}></SmallCard>;
   });
 
   return (
     <>
-      <SmallCardContainer key={roundIndex}>
+      <SmallCardContainer>
         <HisotryCardsLabel>P</HisotryCardsLabel>
         {roundPlayerCards}
       </SmallCardContainer>
 
-      <SmallCardContainer key={roundIndex}>
+      <SmallCardContainer>
         <HisotryCardsLabel>C</HisotryCardsLabel>
         {roundcroupierCards}
       </SmallCardContainer>

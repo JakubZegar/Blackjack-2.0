@@ -5,10 +5,14 @@ import { HandContainer, StyledCard } from "./CardElements";
 import ReversableCard from "./ReversableCard";
 
 import useGameContext from "../../hooks/useGameContext";
+
+import pointsHelpers from "../points/PointsHelper";
+
 import { rules } from "../../const/rules";
+import { GameState } from "../../const/gameState";
 
 export default function Hand({ player = false }) {
-  const { playerCards, croupierCards, roundEnded, points } = useGameContext();
+  const { playerCards, croupierCards, currentRoundStatus } = useGameContext();
 
   let cards: DrawedCard[];
 
@@ -18,8 +22,8 @@ export default function Hand({ player = false }) {
     cards = croupierCards;
   }
 
-  const reversedCards = cards.map((card, index) => {
-    return <StyledCard key={index} image={card.image} />;
+  const reversedCards = cards.map((card) => {
+    return <StyledCard key={card.cardIndex} image={card.image} />;
   });
 
   return (
@@ -27,7 +31,13 @@ export default function Hand({ player = false }) {
       {!player && cards.length <= 2 ? (
         <>
           <StyledCard image={cards[0].image} />
-          <ReversableCard aversImage={cards[1].image} isReversed={roundEnded.player && points.playerPoints <= rules.BLACKJACK } />
+          <ReversableCard
+            aversImage={cards[1].image}
+            isReversed={
+              currentRoundStatus !== GameState.PLAYER_ROUND &&
+              pointsHelpers.getPointsOutcomes(playerCards, true) <= rules.BLACKJACK
+            }
+          />
         </>
       ) : (
         reversedCards
