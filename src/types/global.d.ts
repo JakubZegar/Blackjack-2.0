@@ -22,29 +22,12 @@ export type DrawCardResponse = {
 export type DrawedCard = {
   image: string;
   value: string;
+  cardIndex: number;
 };
 
 type CardImages = {
   svg: string;
   png: string;
-};
-
-export type TGameContext = {
-  playerCards: DrawedCard[];
-  croupierCards: DrawedCard[];
-  drawOnGameStart: () => void;
-  drawOneCard: (player?) => void;
-  setRoundEnded: (newRoundStatus: SetStateAction<{ player: boolean; croupier: boolean }>) => void;
-  message: string;
-  setMessage: (message: SetStateAction<string>) => void;
-  roundEnded: {
-    player: boolean;
-    croupier: boolean;
-  };
-  resetRound: () => void;
-  setPoints: (points: SetStateAction<{ playerPoints: number; croupierPoints: number }>) => void;
-  points: { playerPoints: number; croupierPoints: number };
-  prevoiusRounds: EndedRoundStatus[];
 };
 
 export type TDeckContext = {

@@ -1,7 +1,5 @@
 import styled from "styled-components/macro";
 
-import { colors } from "../../const/colors";
-
 export const RoundHistoryContiner = styled.div`
   display: flex;
   flex-direction: column;

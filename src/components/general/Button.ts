@@ -31,7 +31,7 @@ export const MenuButton = styled(Link)`
     background-color: ${colors.hover};
   }
 `;
-export const Button = styled.button<{ smallMargin?: boolean; disabled: boolean }>`
+export const Button = styled.button<{ smallMargin?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
