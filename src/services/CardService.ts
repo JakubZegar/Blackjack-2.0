@@ -18,7 +18,7 @@ const drawCards = async (deckId: string, cardNumber: string) => {
     return {
       value: card.value,
       image: card.image,
-      cardIndex: cardCounter++,
+      cardId: cardCounter++,
     };
   });
 };
