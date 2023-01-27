@@ -22,7 +22,7 @@ export type DrawCardResponse = {
 export type DrawedCard = {
   image: string;
   value: string;
-  cardIndex: number;
+  cardId: number;
 };
 
 type CardImages = {
@@ -39,4 +39,14 @@ export type TDeckContext = {
 export type EndedRoundStatus = {
   playerCards: DrawedCard[];
   croupierCards: DrawedCard[];
+};
+
+export type TGameContext = {
+  playerCards: DrawedCard[];
+  croupierCards: DrawedCard[];
+  drawOneCard: (player?: boolean) => void;
+  message: string;
+  setMessage: (message: SetStateAction<string>) => void;
+  currentRoundStatus: GameState;
+  setCurrentRoundStatus: (message: SetStateAction<GameState>) => void;
 };

@@ -2,19 +2,19 @@ import React from "react";
 
 import { RoundHistoryContiner, RoundStatusLabel } from "./RoundHisotryElements";
 
-import useGameContext from "../../hooks/useGameContext";
 import SingleRoundHistory from "./SingleRoundHistory";
+import { useRoundHistory } from "./RoundHistoryHooks";
 
 export default function RoundHistory() {
-  const { prevoiusRounds, roundWinners } = useGameContext();
+  const [previousRoundsDetails, roundWinners] = useRoundHistory();
 
-  if (prevoiusRounds.length === 0) {
+  if (previousRoundsDetails.length === 0) {
     return null;
   }
 
   return (
     <RoundHistoryContiner>
-      {prevoiusRounds.map((prevRound, roundIndex) => {
+      {previousRoundsDetails.map((prevRound, roundIndex) => {
         return (
           <React.Fragment key={roundIndex}>
             <RoundStatusLabel>

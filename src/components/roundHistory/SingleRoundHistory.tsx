@@ -8,11 +8,11 @@ type Props = {
 
 export default function SingleRoundHistory({ roundInfo }: Props) {
   const roundPlayerCards = roundInfo.playerCards.map((card) => {
-    return <SmallCard key={card.cardIndex} src={card.image}></SmallCard>;
+    return <SmallCard key={card.cardId} src={card.image}></SmallCard>;
   });
 
   const roundcroupierCards = roundInfo.croupierCards.map((card) => {
-    return <SmallCard key={card.cardIndex} src={card.image}></SmallCard>;
+    return <SmallCard key={card.cardId} src={card.image}></SmallCard>;
   });
 
   return (
