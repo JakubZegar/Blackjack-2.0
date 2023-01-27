@@ -38,33 +38,39 @@ export const getPointsFromCard = (card: DrawedCard) => {
   };
 };
 
-const getPointsOutcomes = (cards: DrawedCard[], player: boolean, isCroupierCardReversed = false) => {
+export const evaluatePointsForAllCards = (cards: DrawedCard[]) => {
   let cardValues: TCountPoints;
   let [sumPoints, sumAlternativePoints] = [0, 0];
 
-  if (isCroupierCardReversed || player ) {
-    cards.forEach((card) => {
-      cardValues = getPointsFromCard(card);
+  cards.forEach((card) => {
+    cardValues = getPointsFromCard(card);
 
-      if (card.value === "ACE" && sumPoints !== sumAlternativePoints) {
-        sumPoints += cardValues.main;
-        sumAlternativePoints += cardValues.main;
-      } else {
-        sumPoints += cardValues.main;
-        sumAlternativePoints += cardValues.alternative;
-      }
-    });
-  } else {
-    cardValues = getPointsFromCard(cards[0]);
-    sumPoints += cardValues.main;
-    sumAlternativePoints += cardValues.alternative;
-  }
+    if (card.value === "ACE" && sumPoints !== sumAlternativePoints) {
+      sumPoints += cardValues.main;
+      sumAlternativePoints += cardValues.main;
+    } else {
+      sumPoints += cardValues.main;
+      sumAlternativePoints += cardValues.alternative;
+    }
+  });
 
   return sumAlternativePoints > 0 && sumAlternativePoints <= rules.BLACKJACK ? sumAlternativePoints : sumPoints;
 };
 
+const getCroupierPoints = (croupierCards: DrawedCard[], isCroupierCardReversed = false) => {
+  if (isCroupierCardReversed) {
+    return evaluatePointsForAllCards(croupierCards);
+  } else {
+    let cardValues = getPointsFromCard(croupierCards[0]);
+    return cardValues.alternative > 0 && cardValues.alternative <= rules.BLACKJACK
+      ? cardValues.alternative
+      : cardValues.main;
+  }
+};
+
 const pointsHelpers = {
-  getPointsOutcomes: getPointsOutcomes,
+  getCroupierPoints: getCroupierPoints,
+  getPlayerPoints: evaluatePointsForAllCards,
 };
 
 export default pointsHelpers;
