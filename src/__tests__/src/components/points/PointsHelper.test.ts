@@ -10,7 +10,7 @@ test("should get 1 or 11 points from ace", () => {
   const aceOfHearts = {
     image: "https://deckofcardsapi.com/static/img/AH.png",
     value: "ACE",
-    cardIndex: 1,
+    cardId: 1,
   };
 
   expect(getPointsFromCard(aceOfHearts)).toStrictEqual({
@@ -23,7 +23,7 @@ test("should get 10 points from queen", () => {
   const queenOfDiamonds = {
     image: "https://deckofcardsapi.com/static/img/QD.png",
     value: "QUEEN",
-    cardIndex: 1,
+    cardId: 1,
   };
 
   expect(getPointsFromCard(queenOfDiamonds)).toStrictEqual({
@@ -36,7 +36,7 @@ test("should get 10 points from king", () => {
   const kingOfHearts = {
     image: "https://deckofcardsapi.com/static/img/KH.png",
     value: "KING",
-    cardIndex: 1,
+    cardId: 1,
   };
   expect(getPointsFromCard(kingOfHearts)).toStrictEqual({
     alternative: 10,
@@ -48,7 +48,7 @@ test("should get 10 points from jack", () => {
   const jackOfSpades = {
     image: "https://deckofcardsapi.com/static/img/JS.png",
     value: "JACK",
-    cardIndex: 1,
+    cardId: 1,
   };
   expect(getPointsFromCard(jackOfSpades)).toStrictEqual({
     alternative: 10,
@@ -60,7 +60,7 @@ test("should get 7 points from seven", () => {
   const sevenOfClubs = {
     image: "https://deckofcardsapi.com/static/img/7C.png",
     value: "7",
-    cardIndex: 1,
+    cardId: 1,
   };
   expect(getPointsFromCard(sevenOfClubs)).toStrictEqual({
     alternative: 7,
@@ -72,7 +72,7 @@ test("should get 0 points from other cards", () => {
   const joker = {
     image: "https://deckofcardsapi.com/static/img/7C.png",
     value: "JOKER",
-    cardIndex: 1,
+    cardId: 1,
   };
   expect(getPointsFromCard(joker)).toStrictEqual({
     alternative: 0,
@@ -85,12 +85,12 @@ test("should count player points with two cards", () => {
     {
       image: "https://deckofcardsapi.com/static/img/2S.png",
       value: "2",
-      cardIndex: 1,
+      cardId: 1,
     },
     {
       image: "https://deckofcardsapi.com/static/img/9H.png",
       value: "9",
-      cardIndex: 2,
+      cardId: 2,
     },
   ];
   expect(pointsHelpers.getPointsOutcomes(cards, player, croupierCardReversed)).toBe(11);
@@ -101,12 +101,12 @@ test("should count only first corupier card when the other is not reversed", () 
     {
       image: "https://deckofcardsapi.com/static/img/2S.png",
       value: "2",
-      cardIndex: 1,
+      cardId: 1,
     },
     {
       image: "https://deckofcardsapi.com/static/img/9H.png",
       value: "9",
-      cardIndex: 2,
+      cardId: 2,
     },
   ];
   expect(pointsHelpers.getPointsOutcomes(cards, croupier, croupierCardNotReversed)).toBe(2);
@@ -117,12 +117,12 @@ test("should count all corupier card when the other is reversed", () => {
     {
       image: "https://deckofcardsapi.com/static/img/2S.png",
       value: "2",
-      cardIndex: 1,
+      cardId: 1,
     },
     {
       image: "https://deckofcardsapi.com/static/img/9H.png",
       value: "9",
-      cardIndex: 2,
+      cardId: 2,
     },
   ];
   expect(pointsHelpers.getPointsOutcomes(cards, player, croupierCardReversed)).toBe(11);
@@ -133,12 +133,12 @@ test("should count one ace when second is not reversed", () => {
     {
       image: "https://deckofcardsapi.com/static/img/AS.png",
       value: "ACE",
-      cardIndex: 1,
+      cardId: 1,
     },
     {
       image: "https://deckofcardsapi.com/static/img/AH.png",
       value: "ACE",
-      cardIndex: 2,
+      cardId: 2,
     },
   ];
   expect(pointsHelpers.getPointsOutcomes(cards, croupier, croupierCardNotReversed)).toBe(11);
@@ -149,12 +149,12 @@ test("should count both aces when second card is reversed, but it should be 12 p
     {
       image: "https://deckofcardsapi.com/static/img/AS.png",
       value: "ACE",
-      cardIndex: 1,
+      cardId: 1,
     },
     {
       image: "https://deckofcardsapi.com/static/img/AH.png",
       value: "ACE",
-      cardIndex: 2,
+      cardId: 2,
     },
   ];
   expect(pointsHelpers.getPointsOutcomes(cards, player, croupierCardReversed)).toBe(12);
@@ -167,7 +167,7 @@ test("should 11 aces give 21 points", () => {
     cards.push({
       image: "https://deckofcardsapi.com/static/img/AH.png",
       value: "ACE",
-      cardIndex: index,
+      cardId: index,
     });
   }
   expect(pointsHelpers.getPointsOutcomes(cards, player, croupierCardReversed)).toBe(21);
@@ -180,7 +180,7 @@ test("should 21 aces give 21 points", () => {
     cards.push({
       image: "https://deckofcardsapi.com/static/img/AH.png",
       value: "ACE",
-      cardIndex: index,
+      cardId: index,
     });
   }
   expect(pointsHelpers.getPointsOutcomes(cards, player, croupierCardReversed)).toBe(21);
@@ -191,17 +191,17 @@ test("should jack, queen and ace return 21", () => {
     {
       image: "https://deckofcardsapi.com/static/img/AH.png",
       value: "ACE",
-      cardIndex: 1,
+      cardId: 1,
     },
     {
       image: "https://deckofcardsapi.com/static/img/JH.png",
       value: "JACK",
-      cardIndex: 2,
+      cardId: 2,
     },
     {
       image: "https://deckofcardsapi.com/static/img/QH.png",
       value: "QUEEN",
-      cardIndex: 3,
+      cardId: 3,
     },
   ];
 
@@ -213,12 +213,12 @@ test("should 10 and ace return 21", () => {
     {
       image: "https://deckofcardsapi.com/static/img/10H.png",
       value: "10",
-      cardIndex: 1,
+      cardId: 1,
     },
     {
       image: "https://deckofcardsapi.com/static/img/AH.png",
       value: "ACE",
-      cardIndex: 2,
+      cardId: 2,
     },
   ];
 
@@ -230,17 +230,17 @@ test("should king and two aces return 12", () => {
     {
       image: "https://deckofcardsapi.com/static/img/KH.png",
       value: "KING",
-      cardIndex: 1,
+      cardId: 1,
     },
     {
       image: "https://deckofcardsapi.com/static/img/AH.png",
       value: "ACE",
-      cardIndex: 2,
+      cardId: 2,
     },
     {
       image: "https://deckofcardsapi.com/static/img/AH.png",
       value: "ACE",
-      cardIndex: 3,
+      cardId: 3,
     },
   ];
 
@@ -252,17 +252,17 @@ test("should ace, king and ace return 12", () => {
     {
       image: "https://deckofcardsapi.com/static/img/AH.png",
       value: "ACE",
-      cardIndex: 1,
+      cardId: 1,
     },
     {
       image: "https://deckofcardsapi.com/static/img/KH.png",
       value: "KING",
-      cardIndex: 2,
+      cardId: 2,
     },
     {
       image: "https://deckofcardsapi.com/static/img/AH.png",
       value: "ACE",
-      cardIndex: 3,
+      cardId: 3,
     },
   ];
 
@@ -274,17 +274,17 @@ test("should count only first card when croupier card is not reversed, but someh
     {
       image: "https://deckofcardsapi.com/static/img/JH.png",
       value: "JACK",
-      cardIndex: 1,
+      cardId: 1,
     },
     {
       image: "https://deckofcardsapi.com/static/img/AH.png",
       value: "ACE",
-      cardIndex: 2,
+      cardId: 2,
     },
     {
       image: "https://deckofcardsapi.com/static/img/QH.png",
       value: "QUEEN",
-      cardIndex: 3,
+      cardId: 3,
     },
   ];
 
@@ -296,17 +296,17 @@ test("should get 0 points when cards are wrong", () => {
     {
       image: "https://deckofcardsapi.com/static/img/JOKER.png",
       value: "JOKER",
-      cardIndex: 1,
+      cardId: 1,
     },
     {
       image: "https://deckofcardsapi.com/static/img/JOKER.png",
       value: "JOKER",
-      cardIndex: 2,
+      cardId: 2,
     },
     {
       image: "https://deckofcardsapi.com/static/img/JOKER.png",
       value: "JOKER",
-      cardIndex: 3,
+      cardId: 3,
     },
   ];
 
