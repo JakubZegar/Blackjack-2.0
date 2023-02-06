@@ -1,11 +1,9 @@
 import styled from "styled-components/macro";
 
 export const GameContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
   justify-content: space-between;
-  flex: 1;
 
   width: 100%;
   height: 100%;

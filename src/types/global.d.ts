@@ -22,6 +22,7 @@ export type DrawCardResponse = {
 export type DrawedCard = {
   image: string;
   value: string;
+  cardId: number;
 };
 
 type CardImages = {
@@ -29,26 +30,23 @@ type CardImages = {
   png: string;
 };
 
-export type TGameContext = {
-  playerCards: DrawedCard[];
-  croupierCards: DrawedCard[];
-  drawOnGameStart: () => void;
-  drawOneCard: (player?) => void;
-  setRoundEnded: (newRoundStatus: SetStateAction<{ player: boolean; croupier: boolean }>) => void;
-  message: string;
-  setMessage: (message: SetStateAction<string>) => void;
-  roundEnded: {
-    player: boolean;
-    croupier: boolean;
-  };
-  resetRound: () => void;
-  setPoints: (points: SetStateAction<{ playerPoints: number; croupierPoints: number }>) => void;
-  points: { playerPoints: number; croupierPoints: number };
-};
-
-
 export type TDeckContext = {
   deckId: string;
   setDeckId: Dispatch<SetStateAction<string>>;
   shuffleDeck: () => void;
-}
+};
+
+export type EndedRoundStatus = {
+  playerCards: DrawedCard[];
+  croupierCards: DrawedCard[];
+};
+
+export type TGameContext = {
+  playerCards: DrawedCard[];
+  croupierCards: DrawedCard[];
+  drawOneCard: (player?: boolean) => void;
+  message: string;
+  setMessage: (message: SetStateAction<string>) => void;
+  currentRoundStatus: GameState;
+  setCurrentRoundStatus: (message: SetStateAction<GameState>) => void;
+};

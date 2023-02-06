@@ -1,12 +1,13 @@
 import React from "react";
 
 import Actions from "../actions/Actions";
+import RoundHistory from "../roundHistory/RoundHistory";
 import { GameContainer, MiddleContainer, PlayerSection, SideContainer } from "./GameElements";
 import { Preloader } from "../general/Preloader";
-import PlayerPoints from "../points/PlayerPoints";
-import CroupierPoints from "../points/CroupierPoints";
-
-import Hand from "../cards/Hand";
+import PlayerPoints from "../points/PlayerPoints/PlayerPoints";
+import CroupierPoints from "../points/CroupierPoints/CroupierPoints";
+import CroupierHand from "../cards/CroupierHand";
+import PlayerHand from "../cards/PlayerHand";
 
 import useGameContext from "../../hooks/useGameContext";
 import { MessageWrapper } from "../points/PointsElements";
@@ -20,11 +21,11 @@ export default function GameInterface() {
 
   return (
     <GameContainer>
-      <SideContainer></SideContainer>
+      <SideContainer>&nbsp;</SideContainer>
 
       <MiddleContainer>
         <PlayerSection>
-          <Hand />
+          <CroupierHand />
           <CroupierPoints />
         </PlayerSection>
 
@@ -33,12 +34,14 @@ export default function GameInterface() {
         <MessageWrapper>{message}</MessageWrapper>
 
         <PlayerSection>
-          <PlayerPoints/>
-          <Hand player={true} />
+          <PlayerPoints />
+          <PlayerHand />
         </PlayerSection>
       </MiddleContainer>
 
-      <SideContainer></SideContainer>
+      <SideContainer>
+        <RoundHistory></RoundHistory>
+      </SideContainer>
     </GameContainer>
   );
 }

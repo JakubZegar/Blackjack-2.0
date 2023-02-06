@@ -8,7 +8,7 @@ type Props = {
 
 function ReversableCard({ aversImage, isReversed }: Props) {
   return (
-    <CardContainer>
+    <CardContainer data-testid='cardHidden'>
       <SingleCard reversed={!isReversed}>
         <Avers aversImage={aversImage} />
         <Revers />
