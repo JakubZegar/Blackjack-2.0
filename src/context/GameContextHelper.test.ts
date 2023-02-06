@@ -1,6 +1,6 @@
-import { winner } from "../../../const/gameWinner";
-import { rules } from "../../../const/rules";
-import gameContextHelpers from "../../../context/GameContextHelper";
+import { winner } from "../const/gameWinner";
+import { rules } from "../const/rules";
+import gameContextHelpers from "./GameContextHelper";
 
 test("should be draw", () => {
   expect(gameContextHelpers.findWhoWonRound(rules.BLACKJACK, rules.BLACKJACK)).toBe(winner.DRAW);

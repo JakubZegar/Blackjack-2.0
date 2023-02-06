@@ -1,5 +1,5 @@
-import pointsHelpers, { getPointsFromCard } from "../../../../components/points/PointsHelper";
-import { DrawedCard } from "../../../../types/global";
+import pointsHelpers, { getPointsFromCard } from "./PointsHelper";
+import { DrawedCard } from "../../types/global";
 
 const player = true;
 const croupier = false;
