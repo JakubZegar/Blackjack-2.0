@@ -93,7 +93,7 @@ test("should count player points with two cards", () => {
       cardId: 2,
     },
   ];
-  expect(pointsHelpers.getPointsOutcomes(cards, player, croupierCardReversed)).toBe(11);
+  expect(pointsHelpers.getPlayerPoints(cards)).toBe(11);
 });
 
 test("should count only first corupier card when the other is not reversed", () => {
@@ -109,7 +109,7 @@ test("should count only first corupier card when the other is not reversed", () 
       cardId: 2,
     },
   ];
-  expect(pointsHelpers.getPointsOutcomes(cards, croupier, croupierCardNotReversed)).toBe(2);
+  expect(pointsHelpers.getCroupierPoints(cards, croupierCardNotReversed)).toBe(2);
 });
 
 test("should count all corupier card when the other is reversed", () => {
@@ -125,7 +125,7 @@ test("should count all corupier card when the other is reversed", () => {
       cardId: 2,
     },
   ];
-  expect(pointsHelpers.getPointsOutcomes(cards, player, croupierCardReversed)).toBe(11);
+  expect(pointsHelpers.getPlayerPoints(cards)).toBe(11);
 });
 
 test("should count one ace when second is not reversed", () => {
@@ -141,7 +141,7 @@ test("should count one ace when second is not reversed", () => {
       cardId: 2,
     },
   ];
-  expect(pointsHelpers.getPointsOutcomes(cards, croupier, croupierCardNotReversed)).toBe(11);
+  expect(pointsHelpers.getCroupierPoints(cards, croupierCardNotReversed)).toBe(11);
 });
 
 test("should count both aces when second card is reversed, but it should be 12 points", () => {
@@ -157,7 +157,7 @@ test("should count both aces when second card is reversed, but it should be 12 p
       cardId: 2,
     },
   ];
-  expect(pointsHelpers.getPointsOutcomes(cards, player, croupierCardReversed)).toBe(12);
+  expect(pointsHelpers.getPlayerPoints(cards)).toBe(12);
 });
 
 test("should 11 aces give 21 points", () => {
@@ -170,7 +170,7 @@ test("should 11 aces give 21 points", () => {
       cardId: index,
     });
   }
-  expect(pointsHelpers.getPointsOutcomes(cards, player, croupierCardReversed)).toBe(21);
+  expect(pointsHelpers.getPlayerPoints(cards)).toBe(21);
 });
 
 test("should 21 aces give 21 points", () => {
@@ -183,7 +183,7 @@ test("should 21 aces give 21 points", () => {
       cardId: index,
     });
   }
-  expect(pointsHelpers.getPointsOutcomes(cards, player, croupierCardReversed)).toBe(21);
+  expect(pointsHelpers.getPlayerPoints(cards)).toBe(21);
 });
 
 test("should jack, queen and ace return 21", () => {
@@ -205,7 +205,7 @@ test("should jack, queen and ace return 21", () => {
     },
   ];
 
-  expect(pointsHelpers.getPointsOutcomes(cards, player, croupierCardReversed)).toBe(21);
+  expect(pointsHelpers.getPlayerPoints(cards)).toBe(21);
 });
 
 test("should 10 and ace return 21", () => {
@@ -222,7 +222,7 @@ test("should 10 and ace return 21", () => {
     },
   ];
 
-  expect(pointsHelpers.getPointsOutcomes(cards, player, croupierCardReversed)).toBe(21);
+  expect(pointsHelpers.getPlayerPoints(cards)).toBe(21);
 });
 
 test("should king and two aces return 12", () => {
@@ -244,7 +244,7 @@ test("should king and two aces return 12", () => {
     },
   ];
 
-  expect(pointsHelpers.getPointsOutcomes(cards, player, croupierCardReversed)).toBe(12);
+  expect(pointsHelpers.getPlayerPoints(cards)).toBe(12);
 });
 
 test("should ace, king and ace return 12", () => {
@@ -266,7 +266,7 @@ test("should ace, king and ace return 12", () => {
     },
   ];
 
-  expect(pointsHelpers.getPointsOutcomes(cards, player, croupierCardReversed)).toBe(12);
+  expect(pointsHelpers.getPlayerPoints(cards)).toBe(12);
 });
 
 test("should count only first card when croupier card is not reversed, but somehow corupier has more than two cards", () => {
@@ -288,7 +288,7 @@ test("should count only first card when croupier card is not reversed, but someh
     },
   ];
 
-  expect(pointsHelpers.getPointsOutcomes(cards, croupier, croupierCardNotReversed)).toBe(10);
+  expect(pointsHelpers.getCroupierPoints(cards, croupierCardNotReversed)).toBe(10);
 });
 
 test("should get 0 points when cards are wrong", () => {
@@ -310,5 +310,5 @@ test("should get 0 points when cards are wrong", () => {
     },
   ];
 
-  expect(pointsHelpers.getPointsOutcomes(cards, player, croupierCardNotReversed)).toBe(0);
+  expect(pointsHelpers.getPlayerPoints(cards)).toBe(0);
 });
