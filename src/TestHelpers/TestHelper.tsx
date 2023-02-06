@@ -3,9 +3,10 @@ import { render } from "@testing-library/react";
 import { cardService } from "../services/CardService";
 import { GameContext } from "../context/GameContext";
 import { GameState } from "../const/gameState";
-import { TGameContext } from "../types/global";
+import { TDeckContext, TGameContext } from "../types/global";
+import { DeckContext, DeckContextProvider } from "../context/DeckContext";
 
-export const mockContext: TGameContext = {
+export const mockGameContext: TGameContext = {
   playerCards: [],
   croupierCards: [],
   drawOneCard: () => {},
@@ -15,17 +16,31 @@ export const mockContext: TGameContext = {
   setCurrentRoundStatus: () => {},
 };
 
+export const mockDeckContext: TDeckContext = {
+  deckId: "sampleDeckId",
+  setDeckId: () => {},
+  shuffleDeck: () => {},
+};
+
 const createDeckMock = jest.spyOn(cardService, "createDeck");
 const drawCardsMock = jest.spyOn(cardService, "drawCards");
-
 export const sampleDeckId = "sampleDeckId";
 
 beforeEach(() => {
   jest.clearAllMocks();
   createDeckMock.mockResolvedValue(sampleDeckId);
-  drawCardsMock.mockResolvedValue([{ value: "test", image: "", cardId: 0 }]);
+  drawCardsMock.mockResolvedValue([
+    { value: "10", image: "", cardId: 0 },
+    { value: "10", image: "", cardId: 1 },
+    { value: "10", image: "", cardId: 2 },
+    { value: "10", image: "", cardId: 3 },
+  ]);
 });
 
-export const renderWithContext = (comp: ReactNode, props?: Partial<typeof mockContext>) => {
-  return render(<GameContext.Provider value={{ ...mockContext, ...props }}>{comp}</GameContext.Provider>);
+export const renderWithContext = (comp: ReactNode, props?: Partial<typeof mockGameContext>) => {
+  return render(<GameContext.Provider value={{ ...mockGameContext, ...props }}>{comp}</GameContext.Provider>);
+};
+
+export const renderWithDeckContext = (comp: ReactNode, props?: Partial<typeof mockDeckContext>) => {
+  return render(<DeckContext.Provider value={{ ...mockDeckContext, ...props }}>{comp}</DeckContext.Provider>);
 };

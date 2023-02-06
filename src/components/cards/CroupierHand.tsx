@@ -14,7 +14,7 @@ export default function CroupierHand() {
   const { croupierCards, currentRoundStatus, playerCards } = useGameContext();
 
   const reversedCards = croupierCards.map((card) => {
-    return <StyledCard key={card.cardId} image={card.image} />;
+    return <StyledCard data-testid='croupierCardVisible' key={card.cardId} image={card.image} />;
   });
 
   let isSecondCardReversed =
@@ -24,7 +24,7 @@ export default function CroupierHand() {
     <HandContainer>
       {croupierCards.length <= 2 ? (
         <>
-          <StyledCard image={croupierCards[0].image} />
+          <StyledCard data-testid='croupierCardVisible' image={croupierCards[0].image} />
           <ReversableCard aversImage={croupierCards[1].image} isReversed={isSecondCardReversed} />
         </>
       ) : (

@@ -8,7 +8,7 @@ export default function PlayerHand() {
   const { playerCards } = useGameContext();
 
   const reversedCards = playerCards.map((card) => {
-    return <StyledCard key={card.cardId} image={card.image} />;
+    return <StyledCard data-testid='playerCard' key={card.cardId} image={card.image} />;
   });
 
   return <HandContainer>{reversedCards}</HandContainer>;
