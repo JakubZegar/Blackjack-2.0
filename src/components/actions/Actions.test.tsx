@@ -2,7 +2,6 @@ import React from "react";
 import { fireEvent, screen } from "@testing-library/react";
 import Actions from "./Actions";
 import { renderWithContext } from "../../TestHelpers/TestHelper";
-import { DrawedCard } from "../../types/global";
 import { GameState } from "../../const/gameState";
 
 const drawOneCard = jest.fn();
