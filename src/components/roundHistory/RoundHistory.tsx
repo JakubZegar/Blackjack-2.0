@@ -16,13 +16,13 @@ export default function RoundHistory() {
     <RoundHistoryContiner>
       {previousRoundsDetails.map((prevRound, roundIndex) => {
         return (
-          <React.Fragment key={roundIndex}>
+          <div data-testid='historyElement' key={roundIndex}>
             <RoundStatusLabel>
               Round {roundIndex + 1} - Winner: {roundWinners[roundIndex]}
             </RoundStatusLabel>
 
             <SingleRoundHistory roundInfo={prevRound}></SingleRoundHistory>
-          </React.Fragment>
+          </div>
         );
       })}
     </RoundHistoryContiner>
