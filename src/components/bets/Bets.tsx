@@ -13,9 +13,7 @@ export default function Bets() {
 
   const {balance, currentBet, placeBet} = useBets()
 
-  const bettingButtons = betButtons.map((buttonValue) => {
-    console.log("BUtton ", buttonValue);
-    
+  const bettingButtons = betButtons.map((buttonValue) => {    
     const isBtnDisabled = currentRoundStatus !== GameState.PLAYER_ROUND || balance - buttonValue < 0;
     return (
       <BetCoin key={buttonValue} disabled={isBtnDisabled} onClick={() => {placeBet(buttonValue)}}>
