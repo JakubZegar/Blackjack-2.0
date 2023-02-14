@@ -1,9 +1,6 @@
 import pointsHelpers, { getPointsFromCard } from "./PointsHelper";
 import { DrawedCard } from "../../types/global";
 
-const player = true;
-const croupier = false;
-const croupierCardReversed = true;
 const croupierCardNotReversed = false;
 
 test("should get 1 or 11 points from ace", () => {

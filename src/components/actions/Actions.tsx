@@ -11,18 +11,18 @@ export default function Actions() {
 
   return (
     <ActionContainer>
-      <Button disabled={currentRoundStatus !== GameState.PLAYER_ROUND} onClick={() => drawOneCard()}>
+      <Button disabled={currentRoundStatus !== GameState.PLAYER_ROUND && currentRoundStatus !== GameState.PLACING_BET} onClick={() => drawOneCard()}>
         Draw
       </Button>
       <Button
-        disabled={currentRoundStatus !== GameState.PLAYER_ROUND}
+        disabled={currentRoundStatus !== GameState.PLAYER_ROUND && currentRoundStatus !== GameState.PLACING_BET}
         onClick={() => setCurrentRoundStatus(GameState.CROUPIER_ROUND)}
       >
         Pass
       </Button>
       <Button
         disabled={currentRoundStatus === GameState.PLAYER_ROUND}
-        onClick={() => setCurrentRoundStatus(GameState.DRAW_CARDS)}
+        onClick={() => setCurrentRoundStatus(GameState.PLACING_BET)}
       >
         Reset
       </Button>
