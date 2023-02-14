@@ -5,7 +5,6 @@ import { BalanceContainer, Balance, BalanceText, BetCoin, BetText, BetConiText }
 import { GameState } from "../../const/gameState";
 import { betButtons } from "../../const/betButtons";
 import { useBets } from "./BetsHooks";
-import { log } from "console";
 
 export default function Bets() {
   
