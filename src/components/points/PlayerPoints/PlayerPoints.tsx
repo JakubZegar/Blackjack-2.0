@@ -25,7 +25,7 @@ function PlayerPoints() {
     }
   }, [setCurrentRoundStatus, playerCards, setMessage]);
 
-  return <PointsWrapper>{pointsHelpers.getPlayerPoints(playerCards)}</PointsWrapper>;
+  return <PointsWrapper data-testid="playerPointsWrapper">{pointsHelpers.getPlayerPoints(playerCards)}</PointsWrapper>;
 }
 
 export default PlayerPoints;

@@ -11,6 +11,7 @@ import PlayerHand from "../cards/PlayerHand";
 
 import useGameContext from "../../hooks/useGameContext";
 import { MessageWrapper } from "../points/PointsElements";
+import Bets from "../bets/Bets";
 
 export default function GameInterface() {
   const { playerCards, message } = useGameContext();
@@ -21,7 +22,9 @@ export default function GameInterface() {
 
   return (
     <GameContainer>
-      <SideContainer>&nbsp;</SideContainer>
+      <SideContainer>
+        <Bets />
+      </SideContainer>
 
       <MiddleContainer>
         <PlayerSection>

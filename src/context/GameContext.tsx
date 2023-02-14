@@ -12,7 +12,7 @@ export const GameContext = createContext<TGameContext>({
   drawOneCard: () => {},
   message: "",
   setMessage: () => {},
-  currentRoundStatus: GameState.DRAW_CARDS,
+  currentRoundStatus: GameState.PLACING_BET,
   setCurrentRoundStatus: () => {},
 });
 
@@ -20,7 +20,7 @@ export function GameContextProvider({ children, deckId }) {
   const [playerCards, setPlayerCards] = useState<DrawedCard[]>([]);
   const [croupierCards, setCroupierCards] = useState<DrawedCard[]>([]);
 
-  const [currentRoundStatus, setCurrentRoundStatus] = useState<GameState>(GameState.DRAW_CARDS);
+  const [currentRoundStatus, setCurrentRoundStatus] = useState<GameState>(GameState.PLACING_BET);
 
   const [message, setMessage] = useState("Your turn");
 
@@ -42,7 +42,7 @@ export function GameContextProvider({ children, deckId }) {
   );
 
   useEffect(() => {
-    if (currentRoundStatus === GameState.DRAW_CARDS && deckId !== "") {
+    if (currentRoundStatus === GameState.PLACING_BET && deckId !== "") {
       cardService.drawCards(deckId, endpoints.drawFourCardsLink).then((result: DrawedCard[]) => {
         setPlayerCards(result.slice(0, 2));
         setCroupierCards(result.slice(2, 4));
