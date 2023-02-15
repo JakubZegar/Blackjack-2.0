@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useState, createContext } from "react";
 
-import { DrawedCard, TGameContext } from "../types/global";
-import { cardService } from "../services/CardService";
 import { endpoints } from "../const/api";
-
 import { GameState } from "../const/gameState";
+import { winner } from "../const/gameWinner";
+
+import { cardService } from "../services/CardService";
+import { DrawedCard, TGameContext } from "../types/global";
+
 import pointsHelpers from "../components/points/PointsHelper";
 import gameContextHelpers from "./GameContextHelper";
-import { winner } from "../const/gameWinner";
 
 export const GameContext = createContext<TGameContext>({
   playerCards: [],

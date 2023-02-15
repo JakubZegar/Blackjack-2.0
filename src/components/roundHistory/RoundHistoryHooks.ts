@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
+
 import { GameState } from "../../const/gameState";
 import { winner } from "../../const/gameWinner";
-import gameContextHelpers from "../../context/GameContextHelper";
-import useGameContext from "../../hooks/useGameContext";
 import { EndedRoundStatus } from "../../types/global";
-import pointsHelpers from "../points/PointsHelper";
+
+import useGameContext from "../../hooks/useGameContext";
 
 export const useRoundHistory = () => {
   const [previousRoundsDetails, setPreviousRoundsDetails] = useState<EndedRoundStatus[]>([]);
@@ -51,7 +51,7 @@ export const useRoundHistory = () => {
         ];
       });
     }
-  }, [playerCards, croupierCards, currentRoundStatus, setMessage]);
+  }, [croupierCards, currentRoundStatus, getRoundWinner, playerCards, setMessage]);
 
   return [previousRoundsDetails, roundWinners];
 };

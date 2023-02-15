@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+
 import { GameState } from "../../const/gameState";
 import { winner } from "../../const/gameWinner";
 import { rules } from "../../const/rules";
+
 import { DrawedCard } from "../../types/global";
 
 export const useBets = (currentRoundStatus: GameState, playerCards: DrawedCard[], croupierCards: DrawedCard[], getRoundWinner: () => winner ) => {
-    const [balance, setBalance] = useState(1000);
+    const [balance, setBalance] = useState(rules.START_BALANCE);
     const [currentBet, setCurrentBet] = useState(0);
 
     const resetCurrentBet = () => {
@@ -47,7 +49,7 @@ export const useBets = (currentRoundStatus: GameState, playerCards: DrawedCard[]
                 }
             }
         }
-    }, [croupierCards, currentBet, currentRoundStatus, playerCards])
+    }, [currentBet, currentRoundStatus, getRoundWinner])
 
     return {balance, currentBet, resetCurrentBet, placeBet};
 }
