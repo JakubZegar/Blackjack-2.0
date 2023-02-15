@@ -1,35 +1,27 @@
 import React from "react";
 import useGameContext from "../../hooks/useGameContext";
 import { Button, MenuButton } from "../general/Button";
-import { BalanceContainer, Balance, BalanceText, BetCoin, BetText, BetConiText } from "./BetsElements";
+import { BalanceContainer, Balance, BalanceText, BetText, } from "./BetsElements";
 import { GameState } from "../../const/gameState";
-import { betButtons } from "../../const/betButtons";
 import { useBets } from "./BetsHooks";
+import BetCoins from "./BetCoins";
+import { routes } from "../../const/routes";
 
 export default function Bets() {
   
-  const { setCurrentRoundStatus, currentRoundStatus } = useGameContext();
+  const { setCurrentRoundStatus, currentRoundStatus, playerCards, croupierCards, getRoundWinner } = useGameContext();
 
-  const {balance, currentBet, placeBet} = useBets()
-
-  const bettingButtons = betButtons.map((buttonValue) => {    
-    const isBtnDisabled = currentRoundStatus !== GameState.PLAYER_ROUND || balance - buttonValue < 0;
-    return (
-      <BetCoin key={buttonValue} disabled={isBtnDisabled} onClick={() => {placeBet(buttonValue)}}>
-        <BetConiText>{buttonValue}</BetConiText>
-      </BetCoin>
-    )
-  })
+  const {balance, currentBet, placeBet} = useBets(currentRoundStatus, playerCards, croupierCards, getRoundWinner)
 
   return (
     <BalanceContainer>
-      <MenuButton to={"/"}>Main menu</MenuButton>
+      <MenuButton to={routes.root}>Main menu</MenuButton>
 
       <Balance>
         <BalanceText>Balance: {balance}</BalanceText>
       </Balance>
 
-      {bettingButtons}
+      <BetCoins balance={balance} currentRoundStatus={currentRoundStatus} placeBet={placeBet}/>
 
       <Balance>
         <BetText>Current bet: {currentBet}</BetText>

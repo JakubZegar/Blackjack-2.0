@@ -1,4 +1,5 @@
 import { SetStateAction, Dispatch } from "react";
+import { winner } from "../const/gameWinner";
 
 export type PointsType = {
   player: number;
@@ -49,4 +50,5 @@ export type TGameContext = {
   setMessage: (message: SetStateAction<string>) => void;
   currentRoundStatus: GameState;
   setCurrentRoundStatus: (message: SetStateAction<GameState>) => void;
+  getRoundWinner: () => winner;
 };
