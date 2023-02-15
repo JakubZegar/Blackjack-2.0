@@ -1,11 +1,14 @@
 import React from "react";
-import useGameContext from "../../hooks/useGameContext";
+
+import BetCoins from "./BetCoins";
 import { Button, MenuButton } from "../general/Button";
 import { BalanceContainer, Balance, BalanceText, BetText, } from "./BetsElements";
+
 import { GameState } from "../../const/gameState";
-import { useBets } from "./BetsHooks";
-import BetCoins from "./BetCoins";
 import { routes } from "../../const/routes";
+
+import { useBets } from "./BetsHooks";
+import useGameContext from "../../hooks/useGameContext";
 
 export default function Bets() {
   
