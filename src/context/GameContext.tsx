@@ -5,9 +5,6 @@ import { cardService } from "../services/CardService";
 import { endpoints } from "../const/api";
 
 import { GameState } from "../const/gameState";
-import pointsHelpers from "../components/points/PointsHelper";
-import gameContextHelpers from "./GameContextHelper";
-import { winner } from "../const/gameWinner";
 
 export const GameContext = createContext<TGameContext>({
   playerCards: [],
@@ -17,7 +14,6 @@ export const GameContext = createContext<TGameContext>({
   setMessage: () => {},
   currentRoundStatus: GameState.PLACING_BET,
   setCurrentRoundStatus: () => {},
-  getRoundWinner: () => winner.DRAW,
 });
 
 export function GameContextProvider({ children, deckId }) {
@@ -45,13 +41,6 @@ export function GameContextProvider({ children, deckId }) {
     [deckId]
   );
 
-  const getRoundWinner = () => {
-    return gameContextHelpers.findWhoWonRound(
-      pointsHelpers.getPlayerPoints(playerCards),
-      pointsHelpers.getCroupierPoints(croupierCards, true)
-    );
-  } 
-
   useEffect(() => {
     if (currentRoundStatus === GameState.PLACING_BET && deckId !== "") {
       cardService.drawCards(deckId, endpoints.drawFourCardsLink).then((result: DrawedCard[]) => {
@@ -71,7 +60,6 @@ export function GameContextProvider({ children, deckId }) {
     setMessage,
     currentRoundStatus,
     setCurrentRoundStatus,
-    getRoundWinner
   };
 
   return <GameContext.Provider value={gameContextValue}>{children}</GameContext.Provider>;

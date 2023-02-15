@@ -10,11 +10,14 @@ export const useRoundHistory = () => {
   const [previousRoundsDetails, setPreviousRoundsDetails] = useState<EndedRoundStatus[]>([]);
   const [roundWinners, setRoundWinners] = useState<string[]>([]);
 
-  const { playerCards, croupierCards, setMessage, currentRoundStatus, getRoundWinner } = useGameContext();
+  const { playerCards, croupierCards, setMessage, currentRoundStatus } = useGameContext();
 
   useEffect(() => {
     if (currentRoundStatus === GameState.FINISH_ROUND) {
-      const gameWinner = getRoundWinner();
+      const gameWinner = gameContextHelpers.findWhoWonRound(
+        pointsHelpers.getPlayerPoints(playerCards),
+        pointsHelpers.getCroupierPoints(croupierCards, true)
+      );
 
       switch (gameWinner) {
         case winner.PLAYER: {
