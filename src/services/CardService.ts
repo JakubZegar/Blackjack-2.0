@@ -3,6 +3,8 @@ import { DeckResponse, DrawCardResponse } from "../types/global";
 
 import { endpoints } from "../const/api";
 
+let cardCounter = 0;
+
 const createDeck = async () => {
   const result: AxiosResponse<DeckResponse> = await axios.get<DeckResponse>(endpoints.newDeckShuffledLink);
   return result.data.deck_id;
@@ -16,6 +18,7 @@ const drawCards = async (deckId: string, cardNumber: string) => {
     return {
       value: card.value,
       image: card.image,
+      cardId: cardCounter++,
     };
   });
 };

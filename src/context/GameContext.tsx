@@ -1,56 +1,33 @@
 import React, { useCallback, useEffect, useState, createContext } from "react";
 
-import { DrawedCard } from "../types/global";
-import { cardService } from "../services/CardService";
 import { endpoints } from "../const/api";
-
-import { TGameContext } from "../types/global";
-import gameContextHelpers from "./GameContextHelper";
-
+import { GameState } from "../const/gameState";
 import { winner } from "../const/gameWinner";
+
+import { cardService } from "../services/CardService";
+import { DrawedCard, TGameContext } from "../types/global";
+
+import pointsHelpers from "../components/points/PointsHelper";
+import gameContextHelpers from "./GameContextHelper";
 
 export const GameContext = createContext<TGameContext>({
   playerCards: [],
   croupierCards: [],
-  drawOnGameStart: () => {},
   drawOneCard: () => {},
-  setRoundEnded: () => {},
   message: "",
   setMessage: () => {},
-  roundEnded: {
-    player: false,
-    croupier: false,
-  },
-  resetRound: () => {},
-  setPoints: () => {},
-  points: {
-    playerPoints: 0,
-    croupierPoints: 0,
-  },
+  currentRoundStatus: GameState.PLACING_BET,
+  setCurrentRoundStatus: () => {},
+  getRoundWinner: () => winner.DRAW,
 });
 
 export function GameContextProvider({ children, deckId }) {
-
   const [playerCards, setPlayerCards] = useState<DrawedCard[]>([]);
   const [croupierCards, setCroupierCards] = useState<DrawedCard[]>([]);
-  const [points, setPoints] = useState({
-    playerPoints: 0,
-    croupierPoints: 0,
-  });
 
-  const [roundEnded, setRoundEnded] = useState({
-    player: false,
-    croupier: false,
-  });
+  const [currentRoundStatus, setCurrentRoundStatus] = useState<GameState>(GameState.PLACING_BET);
 
   const [message, setMessage] = useState("Your turn");
-
-  const drawOnGameStart = useCallback(() => {
-    cardService.drawCards(deckId, endpoints.drawFourCardsLink).then((result: DrawedCard[]) => {
-      setPlayerCards(result.slice(0, 2));
-      setCroupierCards(result.slice(2, 4));
-    });
-  }, [deckId]);
 
   const drawOneCard = useCallback(
     (player = true) => {
@@ -69,55 +46,33 @@ export function GameContextProvider({ children, deckId }) {
     [deckId]
   );
 
-  const resetRound = useCallback(() => {
-    setRoundEnded({
-      player: false,
-      croupier: false,
-    });
-    drawOnGameStart();
-    setMessage("Your turn");
-  }, [drawOnGameStart]);
+  const getRoundWinner = () => {
+    return gameContextHelpers.findWhoWonRound(
+      pointsHelpers.getPlayerPoints(playerCards),
+      pointsHelpers.getCroupierPoints(croupierCards, true)
+    );
+  } 
 
   useEffect(() => {
-    if (deckId !== "") {
-      drawOnGameStart();
+    if (currentRoundStatus === GameState.PLACING_BET && deckId !== "") {
+      cardService.drawCards(deckId, endpoints.drawFourCardsLink).then((result: DrawedCard[]) => {
+        setPlayerCards(result.slice(0, 2));
+        setCroupierCards(result.slice(2, 4));
+      });
+      setMessage("Your turn");
+      setCurrentRoundStatus(GameState.PLAYER_ROUND);
     }
-  }, [deckId, drawOnGameStart]);
-
-  useEffect(() => {
-    if (roundEnded.croupier) {      
-      switch (gameContextHelpers.findWhoWonRound(points.playerPoints, points.croupierPoints)) {
-        case winner.PLAYER: {
-          setMessage("You win");
-          break;
-        }
-        case winner.CROUPIER: {
-          setMessage("You lost");
-          break;
-        }
-        case winner.DRAW: {
-          setMessage("Draw");
-          break;
-        }
-        default: {
-          break;
-        }
-      }
-    }
-  }, [points.croupierPoints, points.playerPoints, roundEnded.croupier]);
+  }, [playerCards, croupierCards, currentRoundStatus, deckId, setCurrentRoundStatus]);
 
   const gameContextValue = {
     playerCards,
     croupierCards,
-    drawOnGameStart,
     drawOneCard,
-    setRoundEnded,
     message,
     setMessage,
-    roundEnded,
-    resetRound,
-    setPoints,
-    points,
+    currentRoundStatus,
+    setCurrentRoundStatus,
+    getRoundWinner
   };
 
   return <GameContext.Provider value={gameContextValue}>{children}</GameContext.Provider>;
